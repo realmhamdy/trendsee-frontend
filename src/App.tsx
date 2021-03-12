@@ -1,15 +1,16 @@
 import React from "react"
 
-import Box from "@material-ui/core/Box"
 import Typography from "@material-ui/core/Typography"
 
 import logo from "./logo.svg"
 import "./App.css"
 import AppBar from "./components/AppBar"
+import WrapperBox from "./components/WrapperBox"
+
 
 function App() {
   return (
-    <Box mx={12}>
+    <WrapperBox>
       <AppBar/>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -25,7 +26,7 @@ function App() {
           Learn React
         </a>
       </header>
-    </Box>
+    </WrapperBox>
   )
 }
 

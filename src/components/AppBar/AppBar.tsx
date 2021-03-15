@@ -18,7 +18,10 @@ const useStyles = makeStyles((theme: Theme) =>
             flexGrow: 1,
         },
         appBar: {
-            boxShadow: "none"
+            boxShadow: "none",
+            "& .MuiToolbar-gutters": {
+                padding: 0
+            }
         },
         title: {
             flexGrow: 1,

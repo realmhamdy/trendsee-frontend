@@ -6,12 +6,13 @@ import logo from "./logo.svg"
 import "./App.css"
 import AppBar from "./components/AppBar"
 import WrapperBox from "./components/WrapperBox"
-
+import BrandPage from "./pages/brand"
 
 function App() {
   return (
     <WrapperBox>
       <AppBar/>
+      <BrandPage/>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Typography variant="h1">

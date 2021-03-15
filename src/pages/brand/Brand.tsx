@@ -1,22 +1,11 @@
 import React from "react"
 
-import Avatar from "@material-ui/core/Avatar"
-import Button from "@material-ui/core/Button"
-import Chip from "@material-ui/core/Chip"
 import Grid from "@material-ui/core/Grid"
-import Typography from "@material-ui/core/Typography"
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
 
-interface BrandData {
-  title: string
-  cover: string
-  avatar: string
-  address: string
-  category: string
-  type: string
-  tags: Array<string>
-  site: string
-}
+import { BrandData } from "./common"
+import BrandInformationSection from "./BrandInformationSection"
+import BrandTabs from "./BrandTabs"
+
 
 const BRAND_DATA: BrandData = {
   "title": "Tommy Hilfiger",
@@ -33,91 +22,13 @@ const BRAND_DATA: BrandData = {
   "site": "http://www.tommy.com"
 }
 
-const useStyles = makeStyles((theme: Theme) => {
-  return createStyles({
-    coverImg: {
-      width: "100%"
-    },
-    avatarImg: {
-      width: "100%",
-      height: "100%",
-      marginTop: -1 * theme.spacing(2)
-    },
-    brandTextDataContainer: {
-      paddingLeft: theme.spacing(4)
-    },
-    brandTitle: {
-      paddingTop: theme.spacing(2)
-    },
-    brandSubtitle: {
-      paddingLeft: theme.spacing(1)
-    },
-    brandTagsContainer: {
-      "& > *": {
-        margin: theme.spacing(0.5),
-        borderRadius: 4
-      }
-    },
-    circleSeparator: {
-      fontSize: "xx-small",
-      verticalAlign: "middle"
-    },
-    siteName: {
-      marginTop: theme.spacing(1)
-    }
-  })
-})
 
 export default function () {
-  const classes = useStyles()
-
-  function renderTags(brand: BrandData) {
-    return brand.tags.map((tag, index) => (
-      <Chip label={tag} key={index}/>
-    ))
-  }
-
-  function openBrandPage(brand: BrandData) {
-    Object.assign(
-      document.createElement("a"),
-      {
-        target: "_blank",
-        href: brand.site
-      }).click()
-  }
 
   return (
     <Grid container spacing={1}>
-      {/* Cover row */}
-      <Grid item xs={12}>
-        <img src={BRAND_DATA.cover} alt="brand cover" className={classes.coverImg}/>
-      </Grid>
-      {/* Information row */}
-      <Grid container item xs={12}>
-        {/* Avatar */}
-        <Grid item xs={2}>
-          <Avatar src={BRAND_DATA.avatar} variant="circular" className={classes.avatarImg}/>
-        </Grid>
-        {/* Text information */}
-        <Grid container item xs={7} className={classes.brandTextDataContainer} alignItems="flex-start">
-          <Grid item xs={12}>
-            <Typography variant="h3" className={classes.brandTitle}>{BRAND_DATA.title}</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant="subtitle1" className={classes.brandSubtitle}>{BRAND_DATA.address} <span className={classes.circleSeparator}>&#11044;</span> {BRAND_DATA.category} ({BRAND_DATA.type})</Typography>
-          </Grid>
-          <Grid item xs={12} className={classes.brandTagsContainer}>
-            {renderTags(BRAND_DATA)}
-          </Grid>
-        </Grid>
-        {/* Brand link */}
-        <Grid container item xs={3} alignItems="center" justify="flex-end">
-          <Grid item xs={4}>
-            <Button variant="contained" color="primary" onClick={() => openBrandPage(BRAND_DATA)}>Visit Site</Button>
-            <Typography align="center" variant="subtitle2" className={classes.siteName}>{new URL(BRAND_DATA.site).hostname}</Typography>
-          </Grid>
-        </Grid>
-      </Grid>
+      <BrandInformationSection brand={BRAND_DATA}/>
+      <BrandTabs/>
     </Grid>
   )
 }

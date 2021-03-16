@@ -1,6 +1,5 @@
 import React from "react"
 
-import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 import IconButton from "@material-ui/core/IconButton"
@@ -11,32 +10,10 @@ import StarBorderIcon from "@material-ui/icons/StarBorder"
 import StarIcon from "@material-ui/icons/Star"
 import ShareIcon from "@material-ui/icons/Share"
 
+import { BrandData } from "./common"
+import TabPanel from "./tabs/TabPanel"
+import OverviewTab from "./tabs/OverviewTab"
 
-interface TabPanelProps {
-    children?: React.ReactNode
-    index: number
-    value: number
-}
-
-function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    {children}
-                </Box>
-            )}
-        </div>
-    )
-}
 
 function a11yProps(index: number) {
     return {
@@ -57,7 +34,11 @@ const useStyles = makeStyles((theme: Theme) => {
     })
 })
 
-export default function BrandTabs() {
+interface Props {
+    brand: BrandData
+}
+
+export default function BrandTabs({ brand }: Props) {
     const classes = useStyles()
     const [tabIndex, setTabIndex] = React.useState(0)
     const [brandFavorited, setBrandFavorited] = React.useState(false)
@@ -79,7 +60,7 @@ export default function BrandTabs() {
                     <Tab label="Products" {...a11yProps(6)} />
                 </Tabs>
                 <TabPanel value={tabIndex} index={0}>
-                    Overview Tab
+                    <OverviewTab brand={brand}/>
                 </TabPanel>
                 <TabPanel value={tabIndex} index={1}>
                     Social Tab

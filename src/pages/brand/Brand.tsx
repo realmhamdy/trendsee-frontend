@@ -19,7 +19,29 @@ const BRAND_DATA: BrandData = {
     "Sudden growth",
     "Scaling ads"
   ],
-  "site": "http://www.tommy.com"
+  "site": "http://www.tommy.com",
+  "missionStatement": "American heritage with a modern edge. All the latest looks, news, and inspiration from the world of Tommy Hilfiger.",
+  "social": {
+    facebook: "http://www.example.com/",
+    shopify: "http://www.example.com/",
+    trustpilot: "http://www.example.com/",
+    reddit: "http://www.example.com/"
+  },
+  "most_popular_ad": {
+    image: "/images/brands/tommyhilfiger/ad.jpg",
+    from: "Dec 06, 2018",
+    to: "Jan 07, 2021",
+    countries: [
+      "AU",
+      "CA",
+      "GB",
+      "US"
+    ],
+    likes: 1800,
+    comments: 904,
+    views: 25157,
+    shares: 30
+  }
 }
 
 
@@ -28,7 +50,7 @@ export default function () {
   return (
     <Grid container spacing={1}>
       <BrandInformationSection brand={BRAND_DATA}/>
-      <BrandTabs/>
+      <BrandTabs brand={BRAND_DATA}/>
     </Grid>
   )
 }

@@ -2,6 +2,7 @@ import React from "react"
 
 import Box from "@material-ui/core/Box"
 import Grid from "@material-ui/core/Grid"
+import IconButton from "@material-ui/core/IconButton"
 import Link from "@material-ui/core/Link"
 import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
@@ -16,6 +17,7 @@ import ShareIcon from "@material-ui/icons/Share"
 import ThumbUpIcon from "@material-ui/icons/ThumbUp"
 import VisibilityIcon from "@material-ui/icons/Visibility"
 import ReactCountryFlag from "react-country-flag"
+import GuageChart from "react-advanced-gauge-chart"
 
 import { BrandData } from "../common"
 
@@ -73,6 +75,17 @@ const useStyles = makeStyles((theme: Theme) => {
                 paddingRight: theme.spacing(0.5),
                 fontSize: "smaller"
             }
+        },
+        gaugePaper: {
+            padding: theme.spacing(1)
+        },
+        gaugePaperHeader: {
+            display: "flex",
+            alignItems: "center",
+            textTransform: "uppercase",
+            "& > .MuiIconButton-root": {
+                marginLeft: theme.spacing(0)
+            }
         }
     })
 })
@@ -100,7 +113,7 @@ interface Props {
 export default function OverviewTab({ brand }: Props) {
     const classes = useStyles()
     return (
-        <Grid container>
+        <Grid container spacing={2}>
             <Grid item xs={3}>
                 <Paper className={classes.socialPaper}>
                     <IconWithLink icon={<InfoIcon/>} text={brand.missionStatement}/>
@@ -130,6 +143,12 @@ export default function OverviewTab({ brand }: Props) {
                         <Typography variant="subtitle1" component="span" className={classes.adStatContainer}><VisibilityIcon/>{brand.most_popular_ad.views}</Typography>
                         <Typography variant="subtitle1" component="span" className={classes.adStatContainer}><ShareIcon/>{brand.most_popular_ad.shares}</Typography>
                     </div>
+                </Paper>
+            </Grid>
+            <Grid item xs={3}>
+                <Paper variant="outlined" className={classes.gaugePaper}>
+                    <Typography variant="caption" className={classes.gaugePaperHeader}>Growth Score <IconButton size="small"><InfoIcon/></IconButton></Typography>
+                    <GuageChart nrOfLevels={1} colors={["#0B825D"]} textColor={"#000000"} percent={.9765} previousValue={0.9655} needleColor={"#000000"} needleBaseColor={"#000000"} hideText={false} arcPadding={0} cornerRadius={0} id="growth-score-chart"/>
                 </Paper>
             </Grid>
         </Grid>

@@ -7,6 +7,8 @@ import Link from "@material-ui/core/Link"
 import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward"
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward"
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline"
 import InfoIcon from "@material-ui/icons/Info"
 import FacebookIcon from "@material-ui/icons/Facebook"
@@ -17,7 +19,7 @@ import ShareIcon from "@material-ui/icons/Share"
 import ThumbUpIcon from "@material-ui/icons/ThumbUp"
 import VisibilityIcon from "@material-ui/icons/Visibility"
 import ReactCountryFlag from "react-country-flag"
-import GuageChart from "react-advanced-gauge-chart"
+import GaugeChart from "react-gauge-chart"
 
 import { BrandData } from "../common"
 
@@ -77,7 +79,8 @@ const useStyles = makeStyles((theme: Theme) => {
             }
         },
         gaugePaper: {
-            padding: theme.spacing(1)
+            padding: theme.spacing(1),
+            width: "100%"
         },
         gaugePaperHeader: {
             display: "flex",
@@ -86,6 +89,10 @@ const useStyles = makeStyles((theme: Theme) => {
             "& > .MuiIconButton-root": {
                 marginLeft: theme.spacing(0)
             }
+        },
+        gaugeDiffTextContainer: {
+            display: "flex",
+            alignItems: "flex-start"
         }
     })
 })
@@ -103,6 +110,53 @@ function IconWithLink({icon, text, url}: IconWithLinkProps) {
             {icon}
             {url ? <Link href={url} color="inherit" target="_blank">{text}</Link> : <Typography variant="body1" component="span">{text}</Typography>}
         </div>
+    )
+}
+
+interface GaugeChartProps {
+    topLabel: string
+    value: number
+    previousValue: number
+
+}
+
+function GaugeChartContainer({ topLabel, value, previousValue }: GaugeChartProps) {
+    const classes = useStyles()
+    let color
+    if (value >= 90) {
+        color = "#0B825D"
+    } else if (value >= 50) {
+        color = "#FAB000"
+    } else {
+        color = "#E25950"
+    }
+    let difference, icon
+    if (value >= previousValue) {
+        difference = Math.round((value - previousValue) * 100) / 100
+        icon = <ArrowUpwardIcon color="primary"/>
+    } else {
+        difference = Math.round((previousValue - value) * 100) / 100
+        icon = <ArrowDownwardIcon color="error"/>
+    }
+    const percent = value / 100
+    return (
+        <Grid item xs={4}>
+            <Paper variant="outlined" className={classes.gaugePaper}>
+                <Typography variant="caption" className={classes.gaugePaperHeader}>{topLabel} <IconButton size="small"><InfoIcon/></IconButton></Typography>
+                <Grid container>
+                    <Grid item xs={9}>
+                        <GaugeChart nrOfLevels={2} percent={percent} colors={[color, "#E3E8EE"]} arcsLength={[percent, 1 - percent]} arcPadding={0} cornerRadius={0} hideText={true}/>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Typography variant="h6" gutterBottom>{value}</Typography>
+                        <div className={classes.gaugeDiffTextContainer}>
+                            <Typography variant="subtitle1" className={classes.gaugeDiffTextContainer}><span>{difference}%</span></Typography>
+                            {icon}
+                        </div>
+                    </Grid>
+                </Grid>
+            </Paper>
+        </Grid>
     )
 }
 
@@ -135,7 +189,7 @@ export default function OverviewTab({ brand }: Props) {
                         from {brand.most_popular_ad.from} to {brand.most_popular_ad.to}
                     </Typography>
                     <div className={classes.countryIcons}>
-                        {brand.most_popular_ad.countries.map((countryCode) => <ReactCountryFlag countryCode={countryCode} svg/>)}
+                        {brand.most_popular_ad.countries.map((countryCode, index) => <ReactCountryFlag countryCode={countryCode} key={index} svg/>)}
                     </div>
                     <div className={classes.adStatsContainer}>
                         <Typography variant="subtitle1" component="span" className={classes.adStatContainer}><ThumbUpIcon/>{brand.most_popular_ad.likes}</Typography>
@@ -145,11 +199,10 @@ export default function OverviewTab({ brand }: Props) {
                     </div>
                 </Paper>
             </Grid>
-            <Grid item xs={3}>
-                <Paper variant="outlined" className={classes.gaugePaper}>
-                    <Typography variant="caption" className={classes.gaugePaperHeader}>Growth Score <IconButton size="small"><InfoIcon/></IconButton></Typography>
-                    <GuageChart nrOfLevels={1} colors={["#0B825D"]} textColor={"#000000"} percent={.9765} previousValue={0.9655} needleColor={"#000000"} needleBaseColor={"#000000"} hideText={false} arcPadding={0} cornerRadius={0} id="growth-score-chart"/>
-                </Paper>
+            <Grid container item xs={9} spacing={3}>
+                <GaugeChartContainer topLabel="Growth Score" value={97.56} previousValue={96.46}/>
+                <GaugeChartContainer topLabel="Success Score" value={74.2} previousValue={74.6}/>
+                <GaugeChartContainer topLabel="Sophistication Score" value={60} previousValue={42}/>
             </Grid>
         </Grid>
     )

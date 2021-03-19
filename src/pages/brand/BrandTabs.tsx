@@ -59,6 +59,22 @@ export default function BrandTabs({ brand }: Props) {
                     <Tab label="Store" {...a11yProps(5)} />
                     <Tab label="Products" {...a11yProps(6)} />
                 </Tabs>
+            </Grid>
+            <Grid item xs={2}>
+                <div className={classes.tabList}>
+                    <Grid container alignItems="center" justify="flex-end">
+                        <Grid item xs={3}>
+                            <IconButton onClick={() => setBrandFavorited(!brandFavorited)}>
+                                {brandFavorited ? <StarIcon/> : <StarBorderIcon/>}
+                            </IconButton>
+                        </Grid>
+                        <Grid item xs={7}>
+                            <Button variant="outlined" startIcon={<ShareIcon/>}>Share</Button>
+                        </Grid>
+                    </Grid>
+                </div>
+            </Grid>
+            <Grid item xs={12}>
                 <TabPanel value={tabIndex} index={0}>
                     <OverviewTab brand={brand}/>
                 </TabPanel>
@@ -80,20 +96,6 @@ export default function BrandTabs({ brand }: Props) {
                 <TabPanel value={tabIndex} index={6}>
                     Products Tab
                 </TabPanel>
-            </Grid>
-            <Grid item xs={2}>
-                <div className={classes.tabList}>
-                    <Grid container alignItems="center" justify="flex-end">
-                        <Grid item xs={3}>
-                            <IconButton onClick={() => setBrandFavorited(!brandFavorited)}>
-                                {brandFavorited ? <StarIcon/> : <StarBorderIcon/>}
-                            </IconButton>
-                        </Grid>
-                        <Grid item xs={7}>
-                            <Button variant="outlined" startIcon={<ShareIcon/>}>Share</Button>
-                        </Grid>
-                    </Grid>
-                </div>
             </Grid>
         </Grid>
     )

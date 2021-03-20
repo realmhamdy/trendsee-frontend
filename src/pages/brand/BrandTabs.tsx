@@ -13,6 +13,7 @@ import ShareIcon from "@material-ui/icons/Share"
 import { BrandData } from "./common"
 import TabPanel from "./tabs/TabPanel"
 import OverviewTab from "./tabs/OverviewTab"
+import SocialTab from "./tabs/SocialTab"
 
 
 function a11yProps(index: number) {
@@ -79,7 +80,7 @@ export default function BrandTabs({ brand }: Props) {
                     <OverviewTab brand={brand}/>
                 </TabPanel>
                 <TabPanel value={tabIndex} index={1}>
-                    Social Tab
+                    <SocialTab/>
                 </TabPanel>
                 <TabPanel value={tabIndex} index={2}>
                     Competitors Tab

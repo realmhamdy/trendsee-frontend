@@ -29,9 +29,7 @@ import GaugeChart from "react-gauge-chart"
 
 import { ResponsiveLine } from "@nivo/line"
 
-import { DateTime } from "luxon"
-
-import { BrandData } from "../common"
+import { BrandData, generateRandomLineChartData } from "../common"
 
 interface LineChartChipProps {
     value: number
@@ -229,17 +227,6 @@ interface LineChartContainerProps {
 
 function LineChartContainer({ change, headerText, id }: LineChartContainerProps) {
     const classes = useLineChartStyles({ value: change})
-    function generateRandomLineChartData(id: number) {
-        return [{
-            id: id,
-            data: new Array(10).fill(0).map((value, index) => {
-                return {
-                    x: DateTime.now().minus({days: 10 - index}).toFormat("yyyy-MM-dd"),
-                    y: Math.round(Math.random() * 10 * 10) / 10
-                }
-            })
-        }]
-    }
     let changeText: string
     if (change > 0) {
         changeText = `+${change}%`
@@ -255,6 +242,7 @@ function LineChartContainer({ change, headerText, id }: LineChartContainerProps)
                 <Chip label={changeText} className={classes.lineChartChip}/>
             </div>
             <div style={{height: "200px"}}>
+                {/* tslint-ignore no-unsafe-assignment, no-unsafe-call */}
                 <ResponsiveLine
                     data={generateRandomLineChartData(id)}
                     margin={{top: 16, bottom: 24}}

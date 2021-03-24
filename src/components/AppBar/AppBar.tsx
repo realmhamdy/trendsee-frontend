@@ -10,6 +10,8 @@ import Typography from "@material-ui/core/Typography"
 import SearchIcon from "@material-ui/icons/Search"
 import HelpOutlineIcon from "@material-ui/icons/HelpOutlineRounded"
 
+import { useHistory } from "react-router-dom"
+
 import "../../static/fonts/cunia/stylesheet.css"
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -94,7 +96,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function () {
     const classes = useStyles()
-
+    const history = useHistory()
+    const [searchTerm, setSearchTerm] = React.useState("")
+    function handleSearchSubmitted() {
+        history.push({
+            pathname: "/search",
+            search: "?" + new URLSearchParams({q: searchTerm}).toString()
+        })
+    }
     return (
         <div className={classes.root}>
             <AppBar position="static" color="transparent" className={classes.appBar}>
@@ -102,7 +111,7 @@ export default function () {
                     <Typography variant="h6" className={classes.title}>
                         <span><span>T</span>rend</span><span><span>S</span>ee</span>
                     </Typography>
-                    <div className={classes.search}>
+                    <form method="GET" className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
@@ -113,8 +122,16 @@ export default function () {
                                 input: classes.inputInput,
                             }}
                             inputProps={{ "aria-label": "search" }}
+                            value={searchTerm}
+                            onChange={(event) => setSearchTerm(event.target.value)}
+                            onKeyDown={(event) => {
+                                if (event.key == "Enter") {
+                                    event.preventDefault()
+                                    handleSearchSubmitted()
+                                }
+                            }}
                         />
-                    </div>
+                    </form>
                     <IconButton className={classes.helpIconButton}>
                         <HelpOutlineIcon/>
                     </IconButton>

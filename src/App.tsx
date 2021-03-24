@@ -13,10 +13,10 @@ function App() {
       <WrapperBox>
         <AppBar/>
         <Switch>
-          <Route path="/search">
+          <Route exact path="/search">
             <SearchResultsPage/>
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <BrandPage/>
           </Route>
       </Switch>

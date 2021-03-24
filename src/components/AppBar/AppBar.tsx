@@ -5,12 +5,13 @@ import AppBar from "@material-ui/core/AppBar"
 import Avatar from "@material-ui/core/Avatar"
 import IconButton from "@material-ui/core/IconButton"
 import InputBase from "@material-ui/core/InputBase"
+import Link from "@material-ui/core/Link"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import SearchIcon from "@material-ui/icons/Search"
 import HelpOutlineIcon from "@material-ui/icons/HelpOutlineRounded"
 
-import { useHistory } from "react-router-dom"
+import { useHistory, Link as RouterLink } from "react-router-dom"
 
 import "../../static/fonts/cunia/stylesheet.css"
 
@@ -108,9 +109,11 @@ export default function () {
         <div className={classes.root}>
             <AppBar position="static" color="transparent" className={classes.appBar}>
                 <Toolbar>
-                    <Typography variant="h6" className={classes.title}>
-                        <span><span>T</span>rend</span><span><span>S</span>ee</span>
-                    </Typography>
+                    <Link component={RouterLink} to="/" className={classes.title} underline="none">
+                        <Typography variant="h6" className={classes.title}>
+                            <span><span>T</span>rend</span><span><span>S</span>ee</span>
+                        </Typography>
+                    </Link>
                     <form method="GET" className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />

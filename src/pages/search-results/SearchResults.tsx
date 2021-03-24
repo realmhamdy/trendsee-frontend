@@ -114,7 +114,7 @@ function BrandCard() {
     return (
         <Grid item xs={4}>
             <Paper variant="outlined" className={classes.resultCardPaper}>
-                <Avatar src="/images/brands/tommyhilfiger/avatar.png" variant="circle"/>
+                <Avatar src="/images/brands/tommyhilfiger/avatar.png" variant="circular"/>
                 <Typography variant="h5"><strong>Tommy Hilfiger</strong></Typography>
                 <Typography variant="body1"><ReactCountryFlag countryCode="US" svg/> LA, California, United States</Typography>
                 <div className={classes.brandLabelsContainer}>
@@ -123,8 +123,8 @@ function BrandCard() {
                 <Typography variant="body1">13,814,986 followers &bull; 1,248 ads</Typography>
                 <div className={classes.brandLabelsContainer}>
                     {scores.map((score, index) => (
-                        <div className={classes.chipContainer}>
-                            <ScoreChip score={score} key={index}/>
+                        <div className={classes.chipContainer} key={index}>
+                            <ScoreChip score={score}/>
                             <Typography variant="subtitle1">{score.title}</Typography>
                         </div>
                     ))}

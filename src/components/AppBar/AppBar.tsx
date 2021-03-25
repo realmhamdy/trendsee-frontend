@@ -109,11 +109,11 @@ export default function () {
         <div className={classes.root}>
             <AppBar position="static" color="transparent" className={classes.appBar}>
                 <Toolbar>
-                    <Link component={RouterLink} to="/" className={classes.title} underline="none">
-                        <Typography variant="h6" className={classes.title}>
+                    <Typography variant="h6" className={classes.title}>
+                        <Link component={RouterLink} to="/" className={classes.title} underline="none">
                             <span><span>T</span>rend</span><span><span>S</span>ee</span>
-                        </Typography>
-                    </Link>
+                        </Link>
+                    </Typography>
                     <form method="GET" className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />

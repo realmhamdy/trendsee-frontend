@@ -1,8 +1,6 @@
 import React from "react"
 
 import Box from "@material-ui/core/Box"
-import Button from "@material-ui/core/Button"
-import ButtonGroup from "@material-ui/core/ButtonGroup"
 import Chip from "@material-ui/core/Chip"
 import Grid from "@material-ui/core/Grid"
 import IconButton from "@material-ui/core/IconButton"
@@ -12,15 +10,12 @@ import Typography from "@material-ui/core/Typography"
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward"
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward"
-import DateRangeIcon from "@material-ui/icons/DateRange"
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline"
 import InfoIcon from "@material-ui/icons/Info"
 import FacebookIcon from "@material-ui/icons/Facebook"
-import KeyboardDownArrowIcon from "@material-ui/icons/KeyboardArrowDown"
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"
 import StarsIcon from "@material-ui/icons/Stars"
 import RedditIcon from "@material-ui/icons/Reddit"
-import SettingsIcon from "@material-ui/icons/Settings"
 import ShareIcon from "@material-ui/icons/Share"
 import ThumbUpIcon from "@material-ui/icons/ThumbUp"
 import VisibilityIcon from "@material-ui/icons/Visibility"
@@ -30,6 +25,7 @@ import GaugeChart from "react-gauge-chart"
 import { ResponsiveLine } from "@nivo/line"
 
 import { BrandData, generateRandomLineChartData } from "../common"
+import ReportsOverviewHeader from "../components/ReportsOverviewHeader"
 
 interface LineChartChipProps {
     value: number
@@ -106,11 +102,6 @@ const useStyles = makeStyles((theme: Theme) => {
             display: "flex",
             alignItems: "flex-start",
             justifyContent: "center"
-        },
-        chartGridControllerButtons: {
-            "& > *": {
-                textAlign: "right"
-            }
         }
     })
 })
@@ -319,23 +310,7 @@ export default function OverviewTab({ brand }: Props) {
                     <GaugeChartContainer topLabel="Sophistication Score" value={60} previousValue={42}/>
                 </Grid>
                 {/* the edit chart controls row */}
-                <Grid container item xs={12}>
-                    <Grid item xs={3}>
-                        <Typography variant="h5">Reports Overview</Typography>
-                    </Grid>
-                    <Grid item xs={2}></Grid>
-                    <Grid container item xs={7} className={classes.chartGridControllerButtons}>
-                        <Grid item xs={8}>
-                            <ButtonGroup aria-label="outlined primary button group">
-                                <Button size="small" endIcon={<KeyboardDownArrowIcon/>}>Last 3 months</Button>
-                                <Button size="small" startIcon={<DateRangeIcon/>}>Nov, 4 2020 - Feb, 3 2021</Button>
-                            </ButtonGroup>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Button startIcon={<SettingsIcon/>} variant="outlined" color="default" size="small">Edit charts</Button>
-                        </Grid>
-                    </Grid>
-                </Grid>
+                <ReportsOverviewHeader/>
                 {/* the line chart grid */}
                 <Grid container item xs={12} className={lineChartClasses.lineChartGrid}>
                     <LineChartContainer change={1.0} headerText="Facebook followers" id={1}/>

@@ -1,7 +1,6 @@
 import React from "react"
 
 import Box from "@material-ui/core/Box"
-import Chip from "@material-ui/core/Chip"
 import Grid from "@material-ui/core/Grid"
 import IconButton from "@material-ui/core/IconButton"
 import Link from "@material-ui/core/Link"
@@ -22,14 +21,10 @@ import VisibilityIcon from "@material-ui/icons/Visibility"
 import ReactCountryFlag from "react-country-flag"
 import GaugeChart from "react-gauge-chart"
 
-import { ResponsiveLine } from "@nivo/line"
-
-import { BrandData, generateRandomLineChartData } from "../common"
+import { BrandData } from "../common"
 import ReportsOverviewHeader from "../components/ReportsOverviewHeader"
+import LineChartContainer from "../components/LineChartContainer"
 
-interface LineChartChipProps {
-    value: number
-}
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -102,12 +97,7 @@ const useStyles = makeStyles((theme: Theme) => {
             display: "flex",
             alignItems: "flex-start",
             justifyContent: "center"
-        }
-    })
-})
-
-const useLineChartStyles = makeStyles((theme: Theme) => {
-    return createStyles({
+        },
         lineChartGrid: {
             border: "1px solid #E3E8EE",
             "& > *": {
@@ -115,35 +105,6 @@ const useLineChartStyles = makeStyles((theme: Theme) => {
                 padding: theme.spacing(1)
             }
         },
-        lineChartHeader: {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between"
-        },
-        lineChartTitleText: {
-            color: theme.palette.text.secondary
-        },
-        lineChartChip: {
-            borderRadius: 4,
-            backgroundColor: (props: LineChartChipProps) => {
-                if (props.value > 0) {
-                    return "#CBF4C9"
-                } else if (props.value == 0) {
-                    return "#E3E8ED"
-                } else {
-                    return "#F89494"
-                }
-            },
-            color: (props: LineChartChipProps) => {
-                if (props.value > 0) {
-                    return "#0B825D"
-                } else if (props.value == 0) {
-                    return "#6E788A"
-                } else {
-                    return "b41c1c"
-                }
-            }
-        }
     })
 })
 
@@ -167,7 +128,6 @@ interface GaugeChartProps {
     topLabel: string
     value: number
     previousValue: number
-
 }
 
 function GaugeChartContainer({ topLabel, value, previousValue }: GaugeChartProps) {
@@ -210,63 +170,12 @@ function GaugeChartContainer({ topLabel, value, previousValue }: GaugeChartProps
     )
 }
 
-interface LineChartContainerProps {
-    change: number
-    headerText: string
-    id: number
-}
-
-function LineChartContainer({ change, headerText, id }: LineChartContainerProps) {
-    const classes = useLineChartStyles({ value: change})
-    let changeText: string
-    if (change > 0) {
-        changeText = `+${change}%`
-    } else if (change == 0) {
-        changeText = `${change}%`
-    } else {
-        changeText = `-${change}%`
-    }
-    return (
-        <Grid item xs={4}>
-            <div className={classes.lineChartHeader}>
-                <Typography variant="subtitle1" className={classes.lineChartTitleText}>{headerText}</Typography>
-                <Chip label={changeText} className={classes.lineChartChip}/>
-            </div>
-            <div style={{height: "200px"}}>
-                {/* tslint-ignore no-unsafe-assignment, no-unsafe-call */}
-                <ResponsiveLine
-                    data={generateRandomLineChartData(id)}
-                    margin={{top: 16, bottom: 24}}
-                    xScale={{ type: "time", format: "%Y-%m-%d", precision: "day" }}
-                    xFormat="time:%Y-%m-%d"
-                    axisTop={null}
-                    axisRight={null}
-                    axisBottom={{
-                        orient: "bottom",
-                        legend: "date",
-                        format: "%Y-%m-%d",
-                        tickSize: 5,
-                        tickPadding: 1,
-                        tickValues: "every 3 days"
-                    }}
-                    useMesh={true}
-                    colors={["#3C4FE0"]}
-                    curve="linear"
-                    enablePoints={false}
-                    enableGridX={false}
-                    enableGridY={false}/>
-            </div>
-    </Grid>
-    )
-}
-
 interface Props {
     brand: BrandData
 }
 
 export default function OverviewTab({ brand }: Props) {
     const classes = useStyles()
-    const lineChartClasses = useLineChartStyles({value: 1.0})
     return (
         <Grid container spacing={2}>
             {/* the info/ad column */}
@@ -312,13 +221,13 @@ export default function OverviewTab({ brand }: Props) {
                 {/* the edit chart controls row */}
                 <ReportsOverviewHeader/>
                 {/* the line chart grid */}
-                <Grid container item xs={12} className={lineChartClasses.lineChartGrid}>
-                    <LineChartContainer change={1.0} headerText="Facebook followers" id={1}/>
-                    <LineChartContainer change={0} headerText="Shopify clients" id={2}/>
-                    <LineChartContainer change={4.0} headerText="TrustPilot reviews" id={3}/>
-                    <LineChartContainer change={1511} headerText="Reddit mentions" id={4}/>
-                    <LineChartContainer change={136} headerText="Ad counts" id={5}/>
-                    <LineChartContainer change={1815} headerText="Website traffic rank" id={6}/>
+                <Grid container item xs={12} className={classes.lineChartGrid}>
+                    <LineChartContainer change={1.0} headerText="Facebook followers" headerNumber="13,831,376" id={1}/>
+                    <LineChartContainer change={0} headerText="Shopify clients" headerNumber="3,009" id={2}/>
+                    <LineChartContainer change={4.0} headerText="TrustPilot reviews" headerNumber="1,803" id={3}/>
+                    <LineChartContainer change={1511} headerText="Reddit mentions" headerNumber="1,660" id={4}/>
+                    <LineChartContainer change={136} headerText="Ad counts" headerNumber="3,009" id={5}/>
+                    <LineChartContainer change={1815} headerText="Website traffic rank" headerNumber="1,803" id={6}/>
                 </Grid>
             </Grid>
         </Grid>

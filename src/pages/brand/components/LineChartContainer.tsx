@@ -15,13 +15,6 @@ interface LineChartChipProps {
 
 const useLineChartStyles = makeStyles((theme: Theme) => {
     return createStyles({
-        lineChartGrid: {
-            border: "1px solid #E3E8EE",
-            "& > *": {
-                border: "1px solid #E3E8EE",
-                padding: theme.spacing(1)
-            }
-        },
         lineChartContainer: {
             height: "200px",
             position: "relative"
@@ -68,7 +61,7 @@ const useLineChartStyles = makeStyles((theme: Theme) => {
     })
 })
 
-interface LineChartContainerProps {
+export interface LineChartContainerProps {
     change: number
     headerText: string
     headerNumber: string
@@ -86,9 +79,9 @@ export default function LineChartContainer({ change, headerText, headerNumber, i
         changeText = `-${change}%`
     }
     return (
-        <Grid item xs={4}>
+        <>
             <div className={classes.lineChartHeader}>
-                <Typography variant="subtitle1" className={classes.lineChartTitleText}>{headerText}</Typography>
+                <Typography variant="subtitle2" className={classes.lineChartTitleText}>{headerText}</Typography>
                 <Chip label={changeText} className={classes.lineChartChip}/>
             </div>
             <div className={classes.lineChartContainer}>
@@ -116,6 +109,6 @@ export default function LineChartContainer({ change, headerText, headerNumber, i
                     enableGridX={false}
                     enableGridY={false}/>
             </div>
-        </Grid>
+        </>
     )
 }

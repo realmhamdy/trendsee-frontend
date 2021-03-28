@@ -302,6 +302,7 @@ export default function AdsTab() {
     const [sortAdsBy, setSortAdsBy] = React.useState("popularity")
     const [filtersPopperOpened, setFiltersPopperOpened] = React.useState(false)
     const [filtersPopperAnchorEl, setFiltersPopperAnchorElem] = React.useState<HTMLButtonElement | null>(null)
+    const [mouseInsideAdNumber, setMouseInsideAdNumber] = React.useState<null | number>(null)
     const countryNames = ["AU", "CA", "GB", "US"]
     function handleFiltersButtonClicked(event: React.MouseEvent<HTMLButtonElement>) {
         setFiltersPopperAnchorElem(filtersPopperAnchorEl ? null : event.currentTarget)
@@ -389,8 +390,12 @@ export default function AdsTab() {
             </Grid>
             <Grid container item xs={12} spacing={2} className={classes.adsContainer}>
                 {new Array(8).fill(0).map((_, index) => (
-                    <Grid key={index} item xs={3}>
-                        <Paper variant="outlined" className={classes.adPaper}>
+                    <Grid key={index} item xs={3} onMouseEnter={() => setMouseInsideAdNumber(index)} onMouseLeave={() => setMouseInsideAdNumber(null)}>
+                        <Paper
+                            variant={mouseInsideAdNumber == index ? "elevation" : "outlined"}
+                            className={classes.adPaper}
+                            elevation={4}
+                            style={{ cursor: mouseInsideAdNumber == index ? "pointer" : "none"}}>
                             <div className={classes.adHeader}>
                                 <div>
                                     <Typography variant="caption" component="span">Start </Typography>

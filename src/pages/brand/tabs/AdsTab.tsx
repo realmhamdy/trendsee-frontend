@@ -259,7 +259,7 @@ function FilterPopper({ open, anchorEl, onDone }: FilterPopperProps) {
                         </FormGroup>
                         <div className={classes.buttonSection}>
                             <Button size="small" variant="outlined" onClick={handleClearButtonClicked}>clear</Button>
-                            <Button size="small" variant="outlined" color="primary" onClick={onDone}>Done</Button>
+                            <Button size="small" variant="contained" color="primary" onClick={onDone}>Done</Button>
                         </div>
                     </Paper>
                 </Fade>

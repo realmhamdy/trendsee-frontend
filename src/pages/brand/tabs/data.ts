@@ -330,3 +330,90 @@ export const growthTableData: Array<GrowthTableDataRow> = [
         }
     },
 ]
+
+export const productsData = [
+    {
+        "brandName": "Twinder",
+        "image": "http://dummyimage.com/250x250.png/ff4444/ffffff",
+        "url": "https://merriam-webster.com/vulputate.js",
+        "name": "Wine - Magnotta, Merlot Sr Vqa",
+        "price": 593.67
+    },
+    {
+        "brandName": "Shuffledrive",
+        "image": "http://dummyimage.com/250x250.png/cc0000/ffffff",
+        "url": "https://fda.gov/vivamus/vestibulum.html",
+        "name": "General Purpose Trigger",
+        "price": 671.36
+    },
+    {
+        "brandName": "Kwideo",
+        "image": "http://dummyimage.com/250x250.png/cc0000/ffffff",
+        "url": "http://simplemachines.org/scelerisque/mauris/sit/amet/eros.jpg",
+        "name": "Doilies - 12, Paper",
+        "price": 532.75
+    },
+    {
+        "brandName": "Bubblemix",
+        "image": "http://dummyimage.com/250x250.png/dddddd/000000",
+        "url": "http://weather.com/ante/ipsum/primis.html",
+        "name": "Lobster - Tail, 3 - 4 Oz",
+        "price": 990.86
+    },
+    {
+        "brandName": "Oba",
+        "image": "http://dummyimage.com/250x250.png/cc0000/ffffff",
+        "url": "http://ustream.tv/purus/aliquet.xml",
+        "name": "Chicken - Wieners",
+        "price": 843.09
+    },
+    {
+        "brandName": "Kwinu",
+        "image": "http://dummyimage.com/250x250.png/cc0000/ffffff",
+        "url": "https://liveinternet.ru/morbi/sem/mauris/laoreet/ut/rhoncus/aliquet.html",
+        "name": "Marjoram - Dried, Rubbed",
+        "price": 411.09
+    },
+    {
+        "brandName": "Pixoboo",
+        "image": "http://dummyimage.com/250x250.png/dddddd/000000",
+        "url": "https://unblog.fr/nulla.js",
+        "name": "Cheese - Goat With Herbs",
+        "price": 24.21
+    },
+    {
+        "brandName": "Youopia",
+        "image": "http://dummyimage.com/250x250.png/5fa2dd/ffffff",
+        "url": "https://newyorker.com/libero/ut.html",
+        "name": "Nantucket - Pomegranate Pear",
+        "price": 607.04
+    },
+    {
+        "brandName": "Demimbu",
+        "image": "http://dummyimage.com/250x250.png/ff4444/ffffff",
+        "url": "http://miibeian.gov.cn/ut/erat/id/mauris/vulputate/elementum.jsp",
+        "name": "Cookie Double Choco",
+        "price": 363.23
+    },
+    {
+        "brandName": "Gabtune",
+        "image": "http://dummyimage.com/250x250.png/dddddd/000000",
+        "url": "http://webmd.com/nulla.jpg",
+        "name": "Cheese - Woolwich Goat, Log",
+        "price": 953.51
+    },
+    {
+        "brandName": "Ailane",
+        "image": "http://dummyimage.com/250x250.png/5fa2dd/ffffff",
+        "url": "https://boston.com/dignissim/vestibulum.html",
+        "name": "Cleaner - Bleach",
+        "price": 667.59
+    },
+    {
+        "brandName": "Oyoyo",
+        "image": "http://dummyimage.com/250x250.png/ff4444/ffffff",
+        "url": "https://thetimes.co.uk/augue/vestibulum/ante/ipsum/primis/in.jsp",
+        "name": "Vector Energy Bar",
+        "price": 969.68
+    }
+]

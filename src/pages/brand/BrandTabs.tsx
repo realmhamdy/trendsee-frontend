@@ -16,6 +16,7 @@ import OverviewTab from "./tabs/OverviewTab"
 import SocialTab from "./tabs/SocialTab"
 import CompetitorsTab from "./tabs/CompetitorsTab"
 import AdsTab from "./tabs/AdsTab"
+import GrowthTab from "./tabs/GrowthTab"
 
 
 function a11yProps(index: number) {
@@ -91,7 +92,7 @@ export default function BrandTabs({ brand }: Props) {
                     <AdsTab/>
                 </TabPanel>
                 <TabPanel value={tabIndex} index={4}>
-                    Growth Tab
+                    <GrowthTab/>
                 </TabPanel>
                 <TabPanel value={tabIndex} index={5}>
                     Store Tab

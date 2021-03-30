@@ -344,7 +344,8 @@ export const productsData = [
         "image": "http://dummyimage.com/250x250.png/cc0000/ffffff",
         "url": "https://fda.gov/vivamus/vestibulum.html",
         "name": "General Purpose Trigger",
-        "price": 671.36
+        "price": 671.36,
+        "previousPrice": 620.30
     },
     {
         "brandName": "Kwideo",
@@ -358,7 +359,8 @@ export const productsData = [
         "image": "http://dummyimage.com/250x250.png/dddddd/000000",
         "url": "http://weather.com/ante/ipsum/primis.html",
         "name": "Lobster - Tail, 3 - 4 Oz",
-        "price": 990.86
+        "price": 990.86,
+        "previousPrice": 912.41
     },
     {
         "brandName": "Oba",
@@ -386,7 +388,8 @@ export const productsData = [
         "image": "http://dummyimage.com/250x250.png/5fa2dd/ffffff",
         "url": "https://newyorker.com/libero/ut.html",
         "name": "Nantucket - Pomegranate Pear",
-        "price": 607.04
+        "price": 607.04,
+        "previousPrice": 711.20
     },
     {
         "brandName": "Demimbu",
@@ -407,7 +410,8 @@ export const productsData = [
         "image": "http://dummyimage.com/250x250.png/5fa2dd/ffffff",
         "url": "https://boston.com/dignissim/vestibulum.html",
         "name": "Cleaner - Bleach",
-        "price": 667.59
+        "price": 667.59,
+        "previousPrice": 643.50
     },
     {
         "brandName": "Oyoyo",

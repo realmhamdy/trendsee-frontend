@@ -45,6 +45,14 @@ const useStyles = makeStyles((theme: Theme) => {
                 lineHeight: 0,
                 marginLeft: theme.spacing(1)
             }
+        },
+        priceLine: {
+            "& span": {
+                marginLeft: theme.spacing(2),
+                color: theme.palette.text.secondary,
+                textDecoration: "line-through",
+                fontSize: "90%"
+            }
         }
     })
 })
@@ -92,7 +100,7 @@ export default function ProductsTab() {
                             </Typography>
                             <Avatar variant="square" src={product.image}/>
                             <Typography variant="subtitle2">{product.name}</Typography>
-                            <Typography variant="subtitle1">{product.price}</Typography>
+                            <Typography variant="subtitle1" className={classes.priceLine}>${product.price}{product.previousPrice ? <span>${product.previousPrice}</span> : null}</Typography>
                         </Paper>
                     </Grid>
                 ))}

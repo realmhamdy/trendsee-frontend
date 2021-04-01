@@ -6,6 +6,7 @@ import AppBar from "./components/AppBar"
 import WrapperBox from "./components/WrapperBox"
 import BrandPage from "./pages/brand"
 import SearchResultsPage from "./pages/search-results"
+import SearchBrandPage from "./pages/search-brand"
 
 function App() {
   return (
@@ -13,6 +14,9 @@ function App() {
       <WrapperBox>
         <AppBar/>
         <Switch>
+          <Route exact path="/search-brand">
+            <SearchBrandPage/>
+          </Route>
           <Route exact path="/search">
             <SearchResultsPage/>
           </Route>

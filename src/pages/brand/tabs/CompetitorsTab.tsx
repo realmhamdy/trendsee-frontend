@@ -2,7 +2,6 @@ import React from "react"
 
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
-import Chip from "@material-ui/core/Chip"
 import Grid from "@material-ui/core/Grid"
 import IconButton from "@material-ui/core/IconButton"
 import Switch from "@material-ui/core/Switch"
@@ -19,15 +18,13 @@ import DateRangeIcon from "@material-ui/icons/DateRange"
 import GetAppIcon from "@material-ui/icons/GetApp"
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown"
 import InfoIcon from "@material-ui/icons/Info"
-import LanguageIcon from "@material-ui/icons/Language"
 import SettingsIcon from "@material-ui/icons/Settings"
-import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt"
-import TrendingDownIcon from "@material-ui/icons/TrendingDown"
-import TrendingUpIcon from "@material-ui/icons/TrendingUp"
-
-import ReactCountryFlag from "react-country-flag"
 
 import { ResponsiveBar } from "@nivo/bar"
+
+import CountryLinkTableCell from "../../../components/CountryLinkTableCell"
+import ScoreTableCell from "../../../components/ScoreTableCell"
+import { ScoreColumn } from "../../../utils"
 
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -75,12 +72,6 @@ const useStyles = makeStyles((theme: Theme) => {
     })
 })
 
-interface ScoreColumn {
-    current: number
-    previous: number
-    status: "good" | "warn" | "bad"
-}
-
 interface TableRowData {
     avatar: string
     name: string
@@ -94,53 +85,6 @@ interface TableRowData {
     adsCount: number
 }
 
-interface ScoreCellProps {
-    score: ScoreColumn
-}
-
-const useScoreCellStyles = makeStyles((theme: Theme) => {
-    return createStyles({
-        cellWrapper: {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between"
-        },
-        valueChip: {
-            backgroundColor: (props: ScoreColumn) => props.status == "good" ? "#CBF4C9" : props.status == "warn" ? "#F6E5B9" : "default",
-            color: (props: ScoreColumn) => props.status == "good" ? "#0B825D" : props.status == "warn" ? "#C44C35" : "default"
-        },
-        directionIcon: {
-            color: (props: ScoreColumn) => {
-                const percentChange = props.current - props.previous
-                if (percentChange > 0) {
-                    return "#0B825D"
-                } else if (percentChange < 0) {
-                    return "#CD3D64"
-                } else {
-                    return "default"
-                }
-            }
-        }
-    })
-})
-
-function ScoreCell(props: ScoreCellProps) {
-    const classes = useScoreCellStyles(props.score)
-    const percentChange = Math.round((props.score.current - props.score.previous) * 100) / 100
-    let icon
-    if (percentChange > 0) {
-        icon = <TrendingUpIcon className={classes.directionIcon}/>
-    } else if (percentChange == 0) {
-        icon = <ArrowRightAltIcon className={classes.directionIcon}/>
-    } else {
-        icon = <TrendingDownIcon className={classes.directionIcon}/>
-    }
-    return (
-        <TableCell>
-            <div className={classes.cellWrapper}><Chip label={props.score.current} className={classes.valueChip}/> <span>{percentChange}%</span> {icon}</div>
-        </TableCell>
-    )
-}
 
 interface BrandBarChartRow {
     index: number
@@ -316,10 +260,10 @@ function BrandTable() {
                 <TableBody>
                     {stableSort(tableData, getComparator(sortDirection, sortByColumn)).map((rowData, index) => <TableRow key={index}>
                         <TableCell><div className={classes.brandNameCellWrapper}><Avatar src={rowData.avatar}/> <Typography variant="h6" noWrap>{rowData.name}</Typography></div></TableCell>
-                        <TableCell><ReactCountryFlag countryCode={rowData.flag} svg/> <IconButton onClick={() => handleBrandURLIconButtonClicked(rowData)}><LanguageIcon/></IconButton></TableCell>
-                        <ScoreCell score={rowData.scalingScore}/>
-                        <ScoreCell score={rowData.revenueScore}/>
-                        <ScoreCell score={rowData.socialsScore}/>
+                        <CountryLinkTableCell flag={rowData.flag} link={rowData.url}/>
+                        <ScoreTableCell score={rowData.scalingScore}/>
+                        <ScoreTableCell score={rowData.revenueScore}/>
+                        <ScoreTableCell score={rowData.socialsScore}/>
                         <TableCell>{rowData.facebookLikes}</TableCell>
                         <TableCell>{rowData.igFollowers}</TableCell>
                         <TableCell>{rowData.adsCount}</TableCell>

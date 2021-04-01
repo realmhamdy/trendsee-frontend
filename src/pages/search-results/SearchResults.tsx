@@ -6,6 +6,7 @@ import Chip from "@material-ui/core/Chip"
 import Divider from "@material-ui/core/Divider"
 import Grid from "@material-ui/core/Grid"
 import IconButton from "@material-ui/core/IconButton"
+import Link from "@material-ui/core/Link"
 import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
@@ -16,7 +17,7 @@ import RedditIcon from "@material-ui/icons/Reddit"
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"
 import StarsIcon from "@material-ui/icons/Stars"
 
-import { useLocation } from "react-router-dom"
+import { useLocation, Link as RouterLink } from "react-router-dom"
 
 import ReactCountryFlag from "react-country-flag"
 
@@ -162,7 +163,7 @@ export default function SearchResults() {
         <Grid container>
             <Grid item xs={12}>
                 <div className={classes.headerContainer}>
-                    <Typography variant="h4">Search results for the query <strong>"{query.get("q")}"</strong></Typography>
+                    <Typography variant="h4">Search results for the query <strong>"{query.get("q")}"</strong> <Link component={RouterLink} to="/search-brand"><small>advanced filters</small></Link></Typography>
                     <Typography variant="h4">6</Typography>
                 </div>
                 <Divider/>

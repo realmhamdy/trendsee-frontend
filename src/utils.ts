@@ -6,3 +6,13 @@ export function openLinkInNewTab(link: string) {
             href: link
         }).click()
 }
+
+export interface ScoreColumn {
+    current: number
+    previous: number
+    status: "good" | "warn" | "bad"
+}
+
+export function formatNumber(n: number) {
+    return new Intl.NumberFormat().format(n)
+}

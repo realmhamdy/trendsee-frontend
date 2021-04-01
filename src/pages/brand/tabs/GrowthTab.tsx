@@ -1,6 +1,5 @@
 import React from "react"
 
-import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 import Link from "@material-ui/core/Link"
@@ -19,8 +18,10 @@ import GetAppIcon from "@material-ui/icons/GetApp"
 import InfoIcon from "@material-ui/icons/Info"
 import LaunchIcon from "@material-ui/icons/Launch"
 
+import AvatarTableCell from "../../../components/AvatarTableCell"
+
 import { growthTableData, GrowthTableDataRow, SimilarFollowedBrands } from "./data"
-import { openLinkInNewTab } from "../../../utils"
+import { openLinkInNewTab, formatNumber } from "../../../utils"
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -31,16 +32,6 @@ const useStyles = makeStyles((theme: Theme) => {
         },
         tableContainer: {
             marginTop: theme.spacing(2)
-        },
-        avatarCell: {
-            display: "flex",
-            alignItems: "center",
-            "& .MuiAvatar-root": {
-                marginRight: theme.spacing(1)
-            },
-            "& strong": {
-                fontSize: "larger"
-            }
         },
         iconCell: {
             display: "flex",
@@ -69,9 +60,6 @@ export default function GrowthTab() {
     const [sortDirection, setSortDirection] = React.useState<"asc" | "desc">("asc")
     const [page, setPage] = React.useState(0)
     const [rowsPerPage, setRowsPerPage] = React.useState(15)
-    function formatNumber(n: number) {
-        return new Intl.NumberFormat().format(n)
-    }
     const createSortHandler = (column: keyof GrowthTableDataRow) => (event: React.MouseEvent<unknown>) => {
         const isAsc = sortByColumn === column && sortDirection === "asc"
         setSortDirection(isAsc ? "desc" : "asc")
@@ -207,11 +195,7 @@ export default function GrowthTab() {
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => (
                                 <TableRow key={index}>
-                                    <TableCell>
-                                        <div className={classes.avatarCell}>
-                                            <Avatar variant="circular" src={row.avatar as string}/> <strong>{row.username}</strong>    
-                                        </div>
-                                    </TableCell>
+                                    <AvatarTableCell avatar={row.avatar as string} label={row.username as string}/>
                                     <TableCell>{formatNumber(row.followers as number)}</TableCell>
                                     <TableCell>{formatNumber(row.engageRate as number)}</TableCell>
                                     <TableCell>{formatNumber(row.avgLikes as number)}</TableCell>

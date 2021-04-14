@@ -16,3 +16,7 @@ export interface ScoreColumn {
 export function formatNumber(n: number) {
     return new Intl.NumberFormat().format(n)
 }
+
+export function getAbsoluteURL(relativePath: string): string {
+    return new URL(relativePath, "http://161.97.176.189:7000").toString()
+}

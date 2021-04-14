@@ -2,10 +2,14 @@ import React from "react"
 
 import { createStyles, makeStyles, Theme, fade } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
+import Autocomplete from "@material-ui/lab/Autocomplete"
 import Avatar from "@material-ui/core/Avatar"
+import CircularProgress from "@material-ui/core/CircularProgress"
 import IconButton from "@material-ui/core/IconButton"
+import InputAdornment from "@material-ui/core/InputAdornment"
 import InputBase from "@material-ui/core/InputBase"
 import Link from "@material-ui/core/Link"
+import TextField from "@material-ui/core/TextField"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import SearchIcon from "@material-ui/icons/Search"
@@ -14,6 +18,8 @@ import HelpOutlineIcon from "@material-ui/icons/HelpOutlineRounded"
 import { useHistory, Link as RouterLink } from "react-router-dom"
 
 import "../../static/fonts/cunia/stylesheet.css"
+
+import { getAbsoluteURL } from "../../utils"
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -44,47 +50,8 @@ const useStyles = makeStyles((theme: Theme) =>
                 }
             }
         },
-        search: {
-            position: "relative",
-            borderWidth: 1,
-            borderColor: "#DEDFE2",
-            borderStyle: "solid",
-            borderRadius: theme.shape.borderRadius,
-            backgroundColor: fade(theme.palette.common.white, 0.15),
-            "&:hover": {
-                backgroundColor: fade(theme.palette.common.white, 0.25),
-            },
-            marginLeft: 0,
-            width: "100%",
-            [theme.breakpoints.up("sm")]: {
-                marginLeft: theme.spacing(1),
-                width: "auto",
-            },
-        },
-        searchIcon: {
-            padding: theme.spacing(0, 2),
-            height: "100%",
-            position: "absolute",
-            pointerEvents: "none",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-        },
-        inputRoot: {
-            color: "inherit",
-        },
-        inputInput: {
-            padding: theme.spacing(1, 1, 1, 0),
-            // vertical padding + font size from searchIcon
-            paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-            transition: theme.transitions.create("width"),
-            width: "100%",
-            [theme.breakpoints.up("sm")]: {
-                width: "350px",
-                "&:focus": {
-                    width: "400px",
-                },
-            },
+        searchForm: {
+            minWidth: 300
         },
         helpIconButton: {
             marginLeft: theme.spacing(4)
@@ -99,12 +66,29 @@ export default function () {
     const classes = useStyles()
     const history = useHistory()
     const [searchTerm, setSearchTerm] = React.useState("")
-    function handleSearchSubmitted() {
-        history.push({
-            pathname: "/search",
-            search: "?" + new URLSearchParams({q: searchTerm}).toString()
-        })
+    const [autocompleteOptions, setAutocompleteOptions] = React.useState<string[]>([])
+    const [autocompleteOptionsLoading, setAutocompleteOptionsLoading] = React.useState(false)
+    function handleSearchTermChanged(event: React.ChangeEvent<{ value: unknown }>) {
+        setSearchTerm(event.target.value as string)
     }
+    function handleSearchAutocompleteSubmitted(event: React.ChangeEvent<unknown>, ...rest: any[]) {
+        const value = rest[0] as string
+        if (value) {
+            history.push("/search?" + new URLSearchParams({q: value}).toString())
+        }
+    }
+    interface Response {
+        brands: string[]
+    }
+    React.useEffect(() => {
+        setAutocompleteOptionsLoading(true)
+        void (async () => {
+            const response = await fetch(getAbsoluteURL("/brands?" + new URLSearchParams({q: searchTerm}).toString()))
+            const data: Response = await response.json() as Response
+            setAutocompleteOptions(data.brands)
+            setAutocompleteOptionsLoading(false)
+        })()
+    }, [searchTerm])
     return (
         <div className={classes.root}>
             <AppBar position="static" color="transparent" className={classes.appBar}>
@@ -114,27 +98,41 @@ export default function () {
                             <span><span>T</span>rend</span><span><span>S</span>ee</span>
                         </Link>
                     </Typography>
-                    <form method="GET" className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search by name, brand, category"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ "aria-label": "search" }}
-                            value={searchTerm}
-                            onChange={(event) => setSearchTerm(event.target.value)}
-                            onKeyDown={(event) => {
-                                if (event.key == "Enter") {
-                                    event.preventDefault()
-                                    handleSearchSubmitted()
-                                }
-                            }}
-                        />
-                    </form>
+                    <div className={classes.searchForm}>
+                        <Autocomplete
+                            options={autocompleteOptions}
+                            loading={autocompleteOptionsLoading}
+                            onChange={handleSearchAutocompleteSubmitted}
+                            closeIcon={null}
+                            id="brand-autocomplete"
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    value={searchTerm}
+                                    onChange={handleSearchTermChanged}
+                                    onSubmit={handleSearchAutocompleteSubmitted}
+                                    label="Search by name, brand, category"
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <SearchIcon/>
+                                            </InputAdornment>
+                                        ),
+                                        endAdornment: (
+                                            <React.Fragment>
+                                                {autocompleteOptionsLoading ? <CircularProgress color="inherit" size={20} /> : null}
+                                                {params.InputProps.endAdornment}
+                                            </React.Fragment>
+                                        ),
+                                        type: "search"
+                                    }}
+                                    variant="outlined"
+                                    size="small"
+                                    margin="none"
+                                />
+                            )}/>
+                    </div>
                     <IconButton className={classes.helpIconButton}>
                         <HelpOutlineIcon/>
                     </IconButton>

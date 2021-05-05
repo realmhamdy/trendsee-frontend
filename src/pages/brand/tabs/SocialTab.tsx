@@ -1,5 +1,5 @@
 import React from "react"
-
+import {useState, useEffect} from "react"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 import ListItemText from "@material-ui/core/ListItemText"
@@ -12,6 +12,10 @@ import CheckIcon from "@material-ui/icons/Check"
 import Typography from "@material-ui/core/Typography"
 import DateRangeIcon from "@material-ui/icons/DateRange"
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown"
+
+import {useSelector} from "react-redux"
+
+import {RootStore} from "../../../Redux/store"
 
 import { ResponsiveLine } from "@nivo/line"
 
@@ -87,6 +91,10 @@ interface PaperButtonDataCollection {
     onClick: (index: number) => void
 }
 
+interface fbdata{
+    data : [{title:string,content:string},{title:string,content:string},{title:string,content:string},{title:string,content:string},{title:string,content:string}]
+}
+
 function PaperButtonsCollection({ data, onClick }: PaperButtonDataCollection) {
     const [activePaperIndex, setActivePaperIndex] = React.useState(0)
     function handlePaperButtonClicked(index: number) {
@@ -102,9 +110,16 @@ function PaperButtonsCollection({ data, onClick }: PaperButtonDataCollection) {
 }
 
 export default function SocialTab() {
-    const [menuAnchorElem, setMenuAnchorElem] = React.useState<null | HTMLElement>(null)
-    const [checkedMenuItemIndex, setCheckedMenuItemIndex] = React.useState(0)
-    const [activePaperButtonIndex, setActivePaperButtonIndex] = React.useState(0)
+    const [menuAnchorElem, setMenuAnchorElem] = useState<null | HTMLElement>(null)
+    const [checkedMenuItemIndex, setCheckedMenuItemIndex] = useState(0)
+    const [activePaperButtonIndex, setActivePaperButtonIndex] = useState(0)
+
+    const FBLikes: number[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["FBLikes"]))
+    const FbFollowers: number[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["FbFollowers"]))
+    const Instafollowers: number[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["Instafollowers"]))
+    const NumberFBads: number[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["NumberFBads"]))
+    const selectedBrand: number = useSelector(((state:RootStore) => state.PageReduser["selectBrand"]))
+
     function handleMenuButtonClicked(event: React.MouseEvent<HTMLButtonElement>) {
         setMenuAnchorElem(event.currentTarget)
     }
@@ -121,6 +136,15 @@ export default function SocialTab() {
     const chartsData = React.useMemo(
         () => menuItems.map((menuItem, index) => new Array(paperColumnButtonCounts[index]).fill(0).map((value, index) => generateRandomLineChartData(index))),
         [])
+    
+    const fbRenderData:any[] = [
+        { title: "Facebook followers", content: FbFollowers[selectedBrand] },
+        { title: "Facebook likes growth", content:"+6,3%" },
+        { title: "Instagram followers", content: Instafollowers[selectedBrand]},
+        { title: "Instagram followers growth", content: "-37" },
+        { title: "Ads count", content: NumberFBads[selectedBrand] }
+    ]  
+    
     return (
         <Grid container>
             <Grid item xs={3}>
@@ -134,13 +158,7 @@ export default function SocialTab() {
                 {
                     checkedMenuItemIndex == 0 ?
                         <PaperButtonsCollection
-                            data={[
-                                { title: "Facebook followers", content: "13,580,488" },
-                                { title: "Facebook likes growth", content:"+6,3%" },
-                                { title: "Instagram followers", content: "13,831,376"},
-                                { title: "Instagram followers growth", content: "-37" },
-                                { title: "Ads count", content: "266" }
-                            ]}
+                            data={fbRenderData}
                             onClick={setActivePaperButtonIndex}/>
                     : checkedMenuItemIndex == 1 ?
                         <PaperButtonsCollection

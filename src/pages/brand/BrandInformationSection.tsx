@@ -6,9 +6,10 @@ import Chip from "@material-ui/core/Chip"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
-
+import {RootStore} from "../../Redux/store"
 import { BrandData } from "./common"
 
+import {useDispatch,useSelector} from "react-redux"
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -52,6 +53,13 @@ interface Props {
 export default function BrandInformationSection({brand}: Props) {
     const classes = useStyles()
     
+    const BrandName: string[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["BrandName"]))
+    const FBLikes: number[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["FBLikes"]))
+    const FbFollowers: number[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["FbFollowers"]))
+    const NumberFBads: number[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["NumberFBads"]))
+    const BrandList: string[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]))
+    const selectedBrand: number = useSelector(((state:RootStore) => state.PageReduser["selectBrand"]))
+
     function renderTags() {
         return brand.tags.map((tag, index) => (
             <Chip label={tag} key={index} />
@@ -82,7 +90,7 @@ export default function BrandInformationSection({brand}: Props) {
                 {/* Text information */}
                 <Grid container item xs={7} className={classes.brandTextDataContainer} alignItems="flex-start">
                     <Grid item xs={12}>
-                        <Typography variant="h3" className={classes.brandTitle}>{brand.title}</Typography>
+                        <Typography variant="h3" className={classes.brandTitle}>{BrandName[selectedBrand]}</Typography>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="subtitle1" className={classes.brandSubtitle}>{brand.address} <span className={classes.circleSeparator}>&#11044;</span> {brand.category} ({brand.type})</Typography>

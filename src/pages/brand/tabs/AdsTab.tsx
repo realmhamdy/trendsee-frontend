@@ -1,5 +1,5 @@
 import React from "react"
-
+import {useState, useEffect} from "react"
 import Button from "@material-ui/core/Button"
 import ClickAwayListener from "@material-ui/core/ClickAwayListener"
 import Checkbox from "@material-ui/core/Checkbox"
@@ -299,10 +299,10 @@ export default function AdsTab() {
     const adCounts = countryData.map((country) => country.adCount)
     adCounts.sort()
     const classes = useStyles()
-    const [sortAdsBy, setSortAdsBy] = React.useState("popularity")
-    const [filtersPopperOpened, setFiltersPopperOpened] = React.useState(false)
-    const [filtersPopperAnchorEl, setFiltersPopperAnchorElem] = React.useState<HTMLButtonElement | null>(null)
-    const [mouseInsideAdNumber, setMouseInsideAdNumber] = React.useState<null | number>(null)
+    const [sortAdsBy, setSortAdsBy] = useState("popularity")
+    const [filtersPopperOpened, setFiltersPopperOpened] = useState(false)
+    const [filtersPopperAnchorEl, setFiltersPopperAnchorElem] = useState<HTMLButtonElement | null>(null)
+    const [mouseInsideAdNumber, setMouseInsideAdNumber] = useState<null | number>(null)
     const countryNames = ["AU", "CA", "GB", "US"]
     function handleFiltersButtonClicked(event: React.MouseEvent<HTMLButtonElement>) {
         setFiltersPopperAnchorElem(filtersPopperAnchorEl ? null : event.currentTarget)

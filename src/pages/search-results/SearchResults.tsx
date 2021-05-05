@@ -1,5 +1,5 @@
 import React from "react"
-
+import { useDispatch, useSelector } from "react-redux"
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
 import Chip from "@material-ui/core/Chip"
@@ -17,9 +17,19 @@ import RedditIcon from "@material-ui/icons/Reddit"
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"
 import StarsIcon from "@material-ui/icons/Stars"
 
-import { useLocation, Link as RouterLink } from "react-router-dom"
+import { useLocation, Link as RouterLink, Redirect, useHistory } from "react-router-dom"
 
 import ReactCountryFlag from "react-country-flag"
+
+import { getAbsoluteURL } from "../../utils"
+
+import Actions from "../Actions/PageActions"
+
+import { RootStore } from "../../Redux/store"
+import LoadingOverlay from "../../components/LoadOverlay/LoadOverlay"
+import BrandCard from "../../components/BrandCard/BrandCard"
+
+
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -55,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) => {
             },
             "& > *:not(:last-child)": {
                 marginBottom: theme.spacing(1.5)
-            } 
+            }
         },
         brandLabelsContainer: {
             display: "flex",
@@ -80,7 +90,7 @@ const useStyles = makeStyles((theme: Theme) => {
 const useChipStyles = makeStyles((theme: Theme) => {
     return createStyles({
         scoreChip: {
-            backgroundColor: (props: Score) => props.status == "good" ? "#CBF4C9": "#F6E5B9",
+            backgroundColor: (props: Score) => props.status == "good" ? "#CBF4C9" : "#F6E5B9",
             color: (props: Score) => props.status == "good" ? "#0B825D" : "#C44C35",
             borderRadius: theme.spacing(1),
             fontWeight: "bold"
@@ -98,57 +108,26 @@ interface ScoreChipProps {
     score: Score
 }
 
-function ScoreChip({ score }: ScoreChipProps) {
-    const classes = useChipStyles(score)
-    return (
-        <Chip label={score.score.toString()} className={classes.scoreChip}/>
-    )
-}
 
-function BrandCard() {
-    const classes = useStyles()
-    const tommyLabels = ["Breaking out", "Sudden growth", "Scaling ads"]
-    const scores: Score[] = [
-        { title: "Scaling Score", score: 73, status: "good" },
-        { title: "Revenue Score", score: 85, status: "bad" }
-    ]
-    return (
-        <Grid item xs={4}>
-            <Paper variant="outlined" className={classes.resultCardPaper}>
-                <Avatar src="/images/brands/tommyhilfiger/avatar.png" variant="circular"/>
-                <Typography variant="h5"><strong>Tommy Hilfiger</strong></Typography>
-                <Typography variant="body1"><ReactCountryFlag countryCode="US" svg/> LA, California, United States</Typography>
-                <div className={classes.brandLabelsContainer}>
-                    {tommyLabels.map((label, index) => <Chip label={label} key={index}/>)}
-                </div>
-                <Typography variant="body1">13,814,986 followers &bull; 1,248 ads</Typography>
-                <div className={classes.brandLabelsContainer}>
-                    {scores.map((score, index) => (
-                        <div className={classes.chipContainer} key={index}>
-                            <ScoreChip score={score}/>
-                            <Typography variant="subtitle1">{score.title}</Typography>
-                        </div>
-                    ))}
-                </div>
-                <div>
-                    <IconButton size="small"><LanguageIcon/></IconButton>
-                    <IconButton size="small"><FacebookIcon/></IconButton>
-                    <IconButton size="small"><ShoppingCartIcon/></IconButton>
-                    <IconButton size="small"><StarsIcon/></IconButton>
-                    <IconButton size="small"><RedditIcon/></IconButton>
-                </div>
-            </Paper>
-        </Grid>
-    )
-}
+
+
 
 export default function SearchResults() {
     function useQuery() {
         return new URLSearchParams(useLocation().search)
     }
+    const dispatch = useDispatch()
+
     const query = useQuery()
+    const queryString = query.get("q") as string
     const classes = useStyles()
     const [selectedButtonIndex, setSelectedButtonIndex] = React.useState(0)
+
+    const BrandName: string[] = useSelector(((state: RootStore) => state.PageReduser["brandDetails"]["BrandName"]))
+
+    const loading: boolean = useSelector(((state: RootStore) => state.PageReduser["loading"]))
+
+    const btandData: string[] = ["brand"]
     const buttonLabels = [
         "All results",
         "Breaking out",
@@ -159,28 +138,39 @@ export default function SearchResults() {
         "New advertiser",
         "Scaling ads"
     ]
+
+    React.useEffect(() => {
+        dispatch(Actions.GetBrandDetails())
+
+    }, [])
+
+
+
     return (
         <Grid container>
+
+            <LoadingOverlay loading={loading} />
             <Grid item xs={12}>
                 <div className={classes.headerContainer}>
                     <Typography variant="h4">Search results for the query <strong>"{query.get("q")}"</strong> <Link component={RouterLink} to="/search-brand"><small>advanced filters</small></Link></Typography>
                     <Typography variant="h4">6</Typography>
                 </div>
-                <Divider/>
+                <Divider />
             </Grid>
             <Grid item xs={12} className={classes.labelButtonsContainer}>
-                {buttonLabels.map((label, index) => 
+                {buttonLabels.map((label, index) =>
                     <Button
                         key={index}
                         variant={selectedButtonIndex == index ? "contained" : "outlined"}
                         color={selectedButtonIndex == index ? "primary" : "default"}
                         size="small"
                         onClick={() => setSelectedButtonIndex(index)}>
-                            {label}
+                        {label}
                     </Button>)}
             </Grid>
             <Grid container item xs={12} className={classes.resultCardsContainer} spacing={2}>
-                {new Array(6).fill(0).map((_, index) => <BrandCard key={index}/>)}
+                {BrandName.map((data, index) => <BrandCard key={index} indexNumber={index} brandName={BrandName} />)}
+
             </Grid>
         </Grid>
     )

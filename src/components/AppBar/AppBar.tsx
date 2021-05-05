@@ -1,5 +1,6 @@
 import React from "react"
-
+import {useState, useEffect} from "react"
+import {useDispatch} from "react-redux"
 import { createStyles, makeStyles, Theme, fade } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
 import Autocomplete from "@material-ui/lab/Autocomplete"
@@ -14,6 +15,8 @@ import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import SearchIcon from "@material-ui/icons/Search"
 import HelpOutlineIcon from "@material-ui/icons/HelpOutlineRounded"
+
+import Actions from "../../pages/Actions/PageActions"
 
 import { useHistory, Link as RouterLink } from "react-router-dom"
 
@@ -65,9 +68,10 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function () {
     const classes = useStyles()
     const history = useHistory()
-    const [searchTerm, setSearchTerm] = React.useState("")
-    const [autocompleteOptions, setAutocompleteOptions] = React.useState<string[]>([])
-    const [autocompleteOptionsLoading, setAutocompleteOptionsLoading] = React.useState(false)
+    const dispatch = useDispatch()
+    const [searchTerm, setSearchTerm] = useState("")
+    const [autocompleteOptions, setAutocompleteOptions] = useState<string[]>([])
+    const [autocompleteOptionsLoading, setAutocompleteOptionsLoading] = useState(false)
     function handleSearchTermChanged(event: React.ChangeEvent<{ value: unknown }>) {
         setSearchTerm(event.target.value as string)
     }
@@ -75,6 +79,7 @@ export default function () {
         const value = rest[0] as string
         if (value) {
             history.push("/search?" + new URLSearchParams({q: value}).toString())
+            dispatch(Actions.GetBrandDetails())
         }
     }
     interface Response {
@@ -83,7 +88,7 @@ export default function () {
     React.useEffect(() => {
         setAutocompleteOptionsLoading(true)
         void (async () => {
-            const response = await fetch(getAbsoluteURL("/brands?" + new URLSearchParams({q: searchTerm}).toString()))
+            const response = await fetch(getAbsoluteURL("/brandlist?" + new URLSearchParams({q: searchTerm}).toString()))
             const data: Response = await response.json() as Response
             setAutocompleteOptions(data.brands)
             setAutocompleteOptionsLoading(false)
@@ -111,7 +116,7 @@ export default function () {
                                     value={searchTerm}
                                     onChange={handleSearchTermChanged}
                                     onSubmit={handleSearchAutocompleteSubmitted}
-                                    label="Search by name, brand, category"
+                                    label="Search by name, brands, category"
                                     InputProps={{
                                         ...params.InputProps,
                                         startAdornment: (

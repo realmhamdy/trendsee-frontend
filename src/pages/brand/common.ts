@@ -32,6 +32,7 @@ export interface BrandData {
     most_popular_ad: BrandAd
 }
 
+
 export function generateRandomLineChartData(id: number) {
     return [{
         id: id,

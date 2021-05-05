@@ -1,5 +1,5 @@
 import React from "react"
-
+import {useState, useEffect} from "react"
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
@@ -192,8 +192,8 @@ function BrandTable() {
             adsCount: 3117
         },
     ]
-    const [sortByColumn, setSortByColumn] = React.useState<keyof TableRowData>("name")
-    const [sortDirection, setSortDirection] = React.useState<"asc" | "desc">("asc")
+    const [sortByColumn, setSortByColumn] = useState<keyof TableRowData>("name")
+    const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc")
     const createSortHandler = (column: keyof TableRowData) => (event: React.MouseEvent<unknown>) => {
         const isAsc = sortByColumn === column && sortDirection === "asc"
         setSortDirection(isAsc ? "desc" : "asc")

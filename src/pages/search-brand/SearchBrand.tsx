@@ -1,5 +1,5 @@
 import React from "react"
-
+import {useState} from "react"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import Button from "@material-ui/core/Button"
 import Divider from "@material-ui/core/Divider"
@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme: Theme) => {
 })
 
 function FilterTypeSelect() {
-    const [dropDownValue, setDropDownValue] = React.useState("contains")
+    const [dropDownValue, setDropDownValue] = useState("contains")
     function handleDropDownChanged(event: React.ChangeEvent<{ value: unknown }>) {
         setDropDownValue(event.target.value as string)
     }
@@ -331,6 +331,8 @@ function BrandsTable() {
         })
         return stabilizedThis.map((el) => el[0])
     }
+
+  
     return (
         <TableContainer>
             <Table>
@@ -465,6 +467,11 @@ export default function SearchBrand() {
     function handleTabChanged(event: React.ChangeEvent<unknown>, newTabIndex: number) {
         setTabIndex(newTabIndex)
     }
+    React.useEffect(() => {
+        
+        alert("ok")
+           
+        }, [])
     return (
         <Grid container>
             <Grid item xs={12}>

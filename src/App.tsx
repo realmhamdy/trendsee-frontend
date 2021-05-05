@@ -7,9 +7,13 @@ import WrapperBox from "./components/WrapperBox"
 import BrandPage from "./pages/brand"
 import SearchResultsPage from "./pages/search-results"
 import SearchBrandPage from "./pages/search-brand"
+import { Provider } from "react-redux"
+import Store from "./Redux/store"
+import Brand from "./pages/brand/Brand"
 
 function App() {
   return (
+    <Provider store={Store}>
     <Router>
       <WrapperBox>
         <AppBar/>
@@ -26,6 +30,7 @@ function App() {
       </Switch>
       </WrapperBox>
     </Router>
+    </Provider>
   )
 }
 

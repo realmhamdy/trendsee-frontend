@@ -1,5 +1,5 @@
 import React from "react"
-
+import {useState, useEffect} from "react"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 import Link from "@material-ui/core/Link"
@@ -17,6 +17,9 @@ import CheckIcon from "@material-ui/icons/Check"
 import GetAppIcon from "@material-ui/icons/GetApp"
 import InfoIcon from "@material-ui/icons/Info"
 import LaunchIcon from "@material-ui/icons/Launch"
+import {useSelector} from "react-redux"
+
+import {RootStore} from "../../../Redux/store"
 
 import AvatarTableCell from "../../../components/AvatarTableCell"
 
@@ -56,9 +59,11 @@ const useStyles = makeStyles((theme: Theme) => {
 
 export default function GrowthTab() {
     const classes = useStyles()
-    const [sortByColumn, setSortByColumn] = React.useState<keyof GrowthTableDataRow>("username")
-    const [sortDirection, setSortDirection] = React.useState<"asc" | "desc">("asc")
-    const [page, setPage] = React.useState(0)
+    const BrandName: number[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["BrandName"]))
+    const selectedBrand: number = useSelector(((state:RootStore) => state.PageReduser["selectBrand"]))
+    const [sortByColumn, setSortByColumn] = useState<keyof GrowthTableDataRow>("username")
+    const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc")
+    const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = React.useState(15)
     const createSortHandler = (column: keyof GrowthTableDataRow) => (event: React.MouseEvent<unknown>) => {
         const isAsc = sortByColumn === column && sortDirection === "asc"
@@ -121,7 +126,7 @@ export default function GrowthTab() {
             <Grid item xs={12} className={classes.headerContainer}>
                 <div>
                     <Typography variant="h5">Recommended influncers</Typography>
-                    <Typography variant="caption"><strong>2,838</strong> influncers likely interested in Tommy Hilfiger</Typography>
+                    <Typography variant="caption"><strong>2,838</strong> influncers likely interested in {BrandName[selectedBrand]}</Typography>
                 </div>
                 <Button variant="outlined" startIcon={<GetAppIcon/>}>Download</Button>
             </Grid>

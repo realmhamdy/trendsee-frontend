@@ -1,5 +1,5 @@
 import React from "react"
-
+import {useState, useEffect} from "react"
 import Avatar from "@material-ui/core/Avatar"
 import Grid from "@material-ui/core/Grid"
 import FormControl from "@material-ui/core/FormControl"
@@ -59,8 +59,8 @@ const useStyles = makeStyles((theme: Theme) => {
 
 export default function ProductsTab() {
     const classes = useStyles()
-    const [productsDropdownValue, setProductsDropdownValue] = React.useState("all")
-    const [hoveredProductIndex, setHoveredProductIndex] = React.useState<number | null>(null)
+    const [productsDropdownValue, setProductsDropdownValue] = useState<string | null>("all")
+    const [hoveredProductIndex, setHoveredProductIndex] = useState<number | null>(null)
     function handleMouseEnteredProduct(index: number) {
         setHoveredProductIndex(index)
     }

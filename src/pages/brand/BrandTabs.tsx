@@ -1,5 +1,5 @@
 import React from "react"
-
+import {useState, useEffect} from "react"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 import IconButton from "@material-ui/core/IconButton"
@@ -45,8 +45,8 @@ interface Props {
 
 export default function BrandTabs({ brand }: Props) {
     const classes = useStyles()
-    const [tabIndex, setTabIndex] = React.useState(0)
-    const [brandFavorited, setBrandFavorited] = React.useState(false)
+    const [tabIndex, setTabIndex] = useState(0)
+    const [brandFavorited, setBrandFavorited] = useState(false)
 
     function handleTabChanged(event: React.ChangeEvent<unknown>, newTabIndex: number) {
         setTabIndex(newTabIndex)

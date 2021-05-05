@@ -222,8 +222,9 @@ export default function OverviewTab({ brand }: Props) {
                 <ReportsOverviewHeader/>
                 {/* the line chart grid */}
                 <Grid container item xs={12} className={classes.lineChartGrid}>
-                    <Grid item xs={4}><LineChartContainer change={1.0} headerText="Facebook followers" headerNumber="13,831,376" id={1}/></Grid>
-                    <Grid item xs={4}><LineChartContainer change={0} headerText="Shopify clients" headerNumber="3,009" id={2}/></Grid>
+                    <Grid item xs={4}>
+                    <LineChartContainer change={1.0} headerText="Facebook followers" headerNumber="13,831,376" id={1}/></Grid>
+                    <Grid item xs={4}><LineChartContainer change={0} headerText="Shopify clients" headerNumber="3,009" id={1}/></Grid>
                     <Grid item xs={4}><LineChartContainer change={4.0} headerText="TrustPilot reviews" headerNumber="1,803" id={3}/></Grid>
                     <Grid item xs={4}><LineChartContainer change={1511} headerText="Reddit mentions" headerNumber="1,660" id={4}/></Grid>
                     <Grid item xs={4}><LineChartContainer change={136} headerText="Ad counts" headerNumber="3,009" id={5}/></Grid>

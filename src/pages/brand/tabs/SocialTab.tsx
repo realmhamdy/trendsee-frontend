@@ -136,6 +136,8 @@ export default function SocialTab() {
     const chartsData = React.useMemo(
         () => menuItems.map((menuItem, index) => new Array(paperColumnButtonCounts[index]).fill(0).map((value, index) => generateRandomLineChartData(index))),
         [])
+
+    console.log("chartsData",chartsData)
     
     const fbRenderData:any[] = [
         { title: "Facebook followers", content: FbFollowers[selectedBrand] },

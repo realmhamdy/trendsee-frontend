@@ -16,11 +16,28 @@ export type defaultInitialState = {
         Timestamp: Date[]
     },
     loading:boolean,
-    selectBrand:number
+    selectBrand:number,
+    brandData:object,
+    searchtype:string,
+    brandname:string,
+    BrandItemDetails:{
+        Address: string[]
+        BrandName: string[]
+        BrandSite: string[]
+        Categories: string[]
+        CoverImage: string[]
+        Description: string[]
+        FBurl: string[]
+        InstagramURL: string[]
+        ProfileImage: string[]
+        ShopifySite: string[]
+        Timestamp: string[]
+        TrustpilotSite: string[]
+    }
 }
 
 export type brandDetails = {
-    BrandName : string[],
+        BrandName : string[],
         FBLikes: number[],
         FbFollowers: number[],
         InstaPosts:  number[],
@@ -33,23 +50,4 @@ export type brandDetails = {
         ReviewSite:  number[],
         ReviewText:  number[],
         Timestamp: Date[]
-}
-
-export type brandList = {
-    brand : {
-         BrandName : string[],
-        FBLikes: number[],
-        FbFollowers: number[],
-        InstaPosts:  number[],
-        Instafollowers:  number[],
-        Instafollowing:  number[],
-        NumberFBads:  number[],
-        NumberReviews: number[],
-        ReditMentions:  number[],
-        ReviewScore: number[],
-        ReviewSite:  number[],
-        ReviewText:  number[],
-        Timestamp: Date[]
-        
-    }
 }

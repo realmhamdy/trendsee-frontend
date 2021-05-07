@@ -69,6 +69,9 @@ export interface LineChartContainerProps {
 }
 
 export default function LineChartContainer({ change, headerText, headerNumber, id }: LineChartContainerProps) {
+    
+    
+    
     const classes = useLineChartStyles({ value: change})
     let changeText: string
     if (change > 0) {
@@ -81,7 +84,7 @@ export default function LineChartContainer({ change, headerText, headerNumber, i
     return (
         <>
             <div className={classes.lineChartHeader}>
-                <Typography variant="subtitle2" className={classes.lineChartTitleText}>{"pizza"}</Typography>
+                <Typography variant="subtitle2" className={classes.lineChartTitleText}>{headerText}</Typography>
                 <Chip label={changeText} className={classes.lineChartChip}/>
             </div>
             <div className={classes.lineChartContainer}>

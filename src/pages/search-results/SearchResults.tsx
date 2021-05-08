@@ -110,7 +110,7 @@ interface data{
     FBurl:string,
     InstagramURL: string,
     ProfileImage: string,
-    ShopifySite: null
+    ShopifySite: null,
     Timestamp: string,
     TrustpilotSite: string,
     brandname:string
@@ -130,14 +130,14 @@ export default function SearchResults() {
    
     const BrandsData: Record<string, data> = useSelector(((state:RootStore) => state.PageReduser["brandData"]))
     
-    console.log("BrandsData",BrandsData)
+    
     
     const BrandName: string[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["BrandName"]))
 
     const loading: boolean = useSelector(((state:RootStore) => state.PageReduser["loading"]))
  
     const searchType:string = useSelector(((state:RootStore) => state.PageReduser["searchtype"]))
-    console.log("searchType",searchType)
+
     const buttonLabels = [
         "All results",
         "Breaking out",
@@ -148,16 +148,7 @@ export default function SearchResults() {
         "New advertiser",
         "Scaling ads"
     ]
-   
-    React.useEffect(() => { 
-        if(searchType==="searchtype"){
-            dispatch(Actions.GetBrandDetails())
-        }else{
-            dispatch(Actions.GetBrandDetails())
-        }
-        
-      
-    }, [])
+ 
 
     const brand= []
     for(const item in BrandsData){

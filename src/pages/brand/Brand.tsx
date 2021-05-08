@@ -59,9 +59,7 @@ export default function () {
   const dispatch = useDispatch()
   
   useEffect(() => {
-   if(brandname){
-    dispatch(Actions.GetBrandData(brandname))
-   }
+  
    
   void (async () => {
     

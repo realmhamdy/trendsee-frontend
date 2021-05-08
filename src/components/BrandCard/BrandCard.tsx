@@ -21,7 +21,7 @@ import StarsIcon from "@material-ui/icons/Stars"
 import ReactCountryFlag from "react-country-flag"
 import {RootStore} from "../../Redux/store"
 import Instagram from "@material-ui/icons/Instagram"
-
+import Actions from "../../pages/Actions/PageActions"
 
 interface Score {
     title: string
@@ -153,28 +153,36 @@ const BrandCard:FC<Props> = (props) => {
     const redirectpage  = (name:string) =>{
         history.push("/")
         dispatch({type:"brandName",payload:name})
+        dispatch(Actions.GetSelectedBrandData(name))
     }
     const Brand:data = props.brand
-    console.log("Brand",Brand)
+   
     const classes = useStyles()
     const tommyLabels = ["Breaking out", "Sudden growth", "Scaling ads"]
     const scores: Score[] = [
         { title: "Scaling Score", score: 73, status: "good" },
         { title: "Revenue Score", score: 85, status: "bad" }
     ]
+
+ 
+
     return (
         <Grid item xs={4}>
             <Paper variant="outlined" className={classes.resultCardPaper}>
                 <Avatar src={Brand.ProfileImage} variant="circular"/>
-                <Typography variant="h5" onClick={()=>redirectpage(Brand.brandname)}><strong>{Brand.brandname}</strong></Typography>
-                <Typography variant="body1"> {Brand.Address}</Typography>
+                <Typography variant="h5" onClick={()=>redirectpage(Brand.brandname)}>
+                    <strong style={{cursor:"pointer"}}>
+                    {Brand.brandname}
+                    </strong>
+                </Typography>
+                <Typography variant="body1"> {(Brand.Address==="NULL" || Brand.Address===null) ? "" : Brand.Address}</Typography>
                 <div className={classes.brandLabelsContainer}>
                     {/* {tommyLabels.map((label, index) => <Chip label={label} key={index}/>)} */}
-                    {Brand.Categories}
+                    {(Brand.Categories === "NULL" || Brand.Categories === null) ?  "" : <Chip label={Brand.Categories}/>}
                 </div>
                 <div className={classes.brandLabelsContainer}>
                   
-                    {Brand.Description}
+                    {(Brand.Description=="NULL" || Brand.Description==null || Brand.Description=="null") ? "": Brand.Description}
                 </div>
                 {/* <Typography variant="body1">{} followers &bull; {}ads</Typography> */}
                 <div className={classes.brandLabelsContainer}>
@@ -186,11 +194,33 @@ const BrandCard:FC<Props> = (props) => {
                     ))} */}
                 </div>
                 <div>
-                    <IconButton size="small" ><a href={Brand.BrandSite} target="blank" style={{color:"grey"}}><LanguageIcon/></a></IconButton>
-                    <IconButton size="small"><a href={Brand.FBurl} target="blank" style={{color:"grey"}}><FacebookIcon /></a></IconButton>
-                    <IconButton size="small"><a href={"#"} target="blank" style={{color:"grey"}}><ShoppingCartIcon/></a></IconButton>
-                    <IconButton size="small"><a href={Brand.InstagramURL} target="blank" style={{color:"grey"}}><Instagram/></a></IconButton>
-                    <IconButton size="small"><a href={Brand.TrustpilotSite} target="blank" style={{color:"grey"}}><RedditIcon/></a></IconButton>
+                    <IconButton size="small" >
+                        {(Brand.BrandSite==="NULL"|| Brand.BrandSite===null) ? <LanguageIcon/>: 
+                        <a href={Brand.BrandSite} target="blank" style={{color:"grey"}}><LanguageIcon/></a>}
+                    </IconButton>
+                    <IconButton size="small">
+                        {(Brand.FBurl ==="NULL"||Brand.FBurl ===null)? <FacebookIcon />:
+                        <a href={Brand.FBurl} target="blank" style={{color:"grey"}}><FacebookIcon /></a>
+                        }
+                    </IconButton>
+                    <IconButton size="small">
+                        {(Brand.ShopifySite ==="NULL"||Brand.FBurl ===null)? <ShoppingCartIcon/>:
+                        <ShoppingCartIcon/>
+                        }
+                      {/* <a href={Brand.ShopifySite} target="blank" style={{color:"grey"}}><ShoppingCartIcon/></a> */}
+                    </IconButton>
+
+                    <IconButton size="small">
+                        {Brand.InstagramURL ==="NULL"?<Instagram/>:
+                        <a href={Brand.InstagramURL} target="blank" style={{color:"grey"}}><Instagram/></a>}
+                        
+                    </IconButton>
+                    <IconButton size="small">
+                        {Brand.TrustpilotSite ==="NULL"?<RedditIcon/>: 
+                         <a href={Brand.TrustpilotSite} target="blank" style={{color:"grey"}}><RedditIcon/></a>
+                        }
+                       
+                    </IconButton>
                 </div>
             </Paper>
         </Grid>

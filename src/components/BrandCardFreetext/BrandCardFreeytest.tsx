@@ -132,7 +132,7 @@ const BrandCardFreeText:FC<Props> = (props) => {
     const FbFollowers: number[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["FbFollowers"]))
     const NumberFBads: number[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["NumberFBads"]))
     const BrandList: string[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]))
-    console.log("BrandDetialscardd",BrandDetials)
+    
     const classes = useStyles()
     const tommyLabels = ["Breaking out", "Sudden growth", "Scaling ads"]
     const scores: Score[] = [

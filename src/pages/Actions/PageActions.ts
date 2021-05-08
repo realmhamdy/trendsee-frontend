@@ -20,11 +20,10 @@ const GetBrandDetails = ()=>{
     const url = new URL(document.URL)
     const query = url.searchParams.get("q") as string
     return (dispatch: Dispatch)=>{
-      
+        console.log("GetBrandDetails Api")
         const loading : loading = { type:"Loading",payload:true}
         dispatch(loading)
         void (async () => {
-           
             const response = await fetch(getAbsoluteURL(`brands/${query}`))
             const data: Response = await response.json() as Response  
     
@@ -40,7 +39,7 @@ const GetFreetextBrandDetails = ()=>{
     const url = new URL(document.URL)
 const query = url.searchParams.get("q") as string
     return (dispatch: Dispatch)=>{
-      
+        console.log("GetFreetextBrandDetails Api")
         const loading : loading = { type:"Loading",payload:true}
         dispatch(loading)
         void (async () => {
@@ -59,14 +58,12 @@ const query = url.searchParams.get("q") as string
 const GetBrandData = (brandname:string)=>{
 
     return (dispatch: Dispatch)=>{
-     
+        console.log("GetBrandData Api")
         const loading : loading = { type:"Loading",payload:true}
         dispatch(loading)
         void (async () => {
             const response = await fetch(getAbsoluteURL(`details/${brandname}`))
-            const data: Response = await response.json() as Response  
-            console.log("branddetails",data)   
-                
+            const data: Response = await response.json() as Response      
             const loading : loading = { type:"Loading",payload:false}
             dispatch(loading)
            const payloadData : payloadData = { type:"BrandItemDetails", payload:data.brand}
@@ -79,13 +76,12 @@ const GetSelectedBrandData = (value:string)=>{
     const url = new URL(document.URL)
 const query = url.searchParams.get("q") as string
     return (dispatch: Dispatch)=>{
+        console.log("GetSelectedBrandData Api")
         const loading : loading = { type:"Loading",payload:true}
         dispatch(loading)
         void (async () => {
             const response = await fetch(getAbsoluteURL(`details/${value}`))
-            const data: Response = await response.json() as Response  
-            console.log("branddetails",data)   
-                
+            const data: Response = await response.json() as Response    
             const loading : loading = { type:"Loading",payload:false}
             dispatch(loading)
            const payloadData : payloadData = { type:"BrandItemDetails", payload:data.brand}

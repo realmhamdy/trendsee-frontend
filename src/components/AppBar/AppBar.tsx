@@ -78,15 +78,14 @@ export default function () {
        
     }
     function handelEnter(event:React.KeyboardEvent){
+        
         if(event.key==="Enter" && searchTerm){
             history.push("/search?" + new URLSearchParams({q: searchTerm}).toString())
             dispatch(Actions.GetFreetextBrandDetails())
         }
     }
-    
     function handleSearchAutocompleteSubmitted(event: React.ChangeEvent<unknown>, ...rest: any[]) {
         const value = rest[0] as string
-
         if (value) {
             //history.push("/search?" + new URLSearchParams({q: value}).toString())
             history.push("/")

@@ -190,11 +190,15 @@ export default function OverviewTab({ brand }: Props) {
             {/* the info/ad column */}
             <Grid item xs={3}>
                 <Paper className={classes.socialPaper}>
-                    <IconWithLink icon={<InfoIcon/>} text={BrandItemDetails["Description"][0]}/>
-                    <IconWithLink icon={<FacebookIcon/>} text={"Facebook"} url={BrandItemDetails["FBurl"][0]}/>
-                    <IconWithLink icon={<ShoppingCartIcon/>} text={"Shopify"} url={BrandItemDetails["ShopifySite"][0]}/>
-                    <IconWithLink icon={<Instagram/>} text={"Instagram"} url={BrandItemDetails["InstagramURL"][0]}/>
-                    <IconWithLink icon={<RedditIcon/>} text={"Reddit"} url={BrandItemDetails["TrustpilotSite"][0]}/>
+                    <IconWithLink icon={<InfoIcon/>} text= {(BrandItemDetails["Description"][0] === "NULL") ?  "" : BrandItemDetails["Description"][0].replace(/[^a-zA-Z ]/g, "") }/>
+
+                    <IconWithLink icon={<FacebookIcon/>} text={"Facebook"} url={(BrandItemDetails["FBurl"][0] === "NULL") ?  "" : BrandItemDetails["FBurl"][0]}/>
+
+                    <IconWithLink icon={<ShoppingCartIcon/>} text={"Shopify"} url={(BrandItemDetails["ShopifySite"][0] === "NULL") ?  "" : BrandItemDetails["ShopifySite"][0]}/>
+
+                    <IconWithLink icon={<Instagram/>} text={"Instagram"} url={(BrandItemDetails["InstagramURL"][0] === "NULL") ?  "" : BrandItemDetails["InstagramURL"][0]}/>
+
+                    <IconWithLink icon={<RedditIcon/>} text={"Reddit"} url={(BrandItemDetails["TrustpilotSite"][0] === "NULL") ?  "" : BrandItemDetails["TrustpilotSite"][0]}/>
                 </Paper>
                 <Paper className={classes.adPaper}>
                     <div className={classes.adPaperTextContainer}>

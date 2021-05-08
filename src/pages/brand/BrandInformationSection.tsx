@@ -63,26 +63,30 @@ export default function BrandInformationSection({brand}: Props) {
    
 
    
-    function renderTags() {
-        return brand.tags.map((tag, index) => (
+    function renderTags(data:string[]) {
+        return data.map((tag, index) => (
             <Chip label={tag} key={index} />
         ))
     }
 
-    function openBrandPage(brand: BrandData) {
-        Object.assign(
-            document.createElement("a"),
-            {
-                target: "_blank",
-                href: `${BrandItemDetails["BrandSite"][0]}`
-            }).click()
+    function openBrandPage() {
+        if(BrandItemDetails["BrandSite"][0] !== "NULL"){
+            Object.assign(
+                document.createElement("a"),
+                {
+                    target: "_blank",
+                    href: `${BrandItemDetails["BrandSite"][0]}`
+                }).click()
+        }
+       
     }
 
     return (
         <>
             {/* Cover row */}
             <Grid item xs={12}>
-                <img src={BrandItemDetails["CoverImage"][0]} alt="brand cover" className={classes.coverImg} />
+                {(!BrandItemDetails["CoverImage"][0] || BrandItemDetails["CoverImage"][0] === "NULL") ?  "" :<img src={BrandItemDetails["CoverImage"][0]} alt="brand cover" className={classes.coverImg} />}
+               
             </Grid>
             {/* Information row */}
             <Grid container item xs={12}>
@@ -96,18 +100,23 @@ export default function BrandInformationSection({brand}: Props) {
                         <Typography variant="h3" className={classes.brandTitle}>{BrandItemDetails["BrandName"][0]}</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1" className={classes.brandSubtitle}>{BrandItemDetails["Address"][0]}  </Typography>
+                        <Typography variant="subtitle1" className={classes.brandSubtitle}>
+                        {(BrandItemDetails["Address"][0] === "NULL") ?  "" : BrandItemDetails["Address"][0]}
+                        </Typography>
                     </Grid>
                     <Grid item xs={12} className={classes.brandTagsContainer}>
                         {/* {renderTags()}   */}
-                        {BrandItemDetails["Categories"][0]}
+                       
+                        {(!BrandItemDetails["Categories"][0] ||BrandItemDetails["Categories"][0] === "NULL") ?  "" : renderTags(BrandItemDetails["Categories"])}
                     </Grid>
                 </Grid>
                 {/* Brand link */}
                 <Grid container item xs={3} alignItems="center" justify="flex-end">
                     <Grid item xs={4}>
-                        <Button variant="contained" color="primary" onClick={() => openBrandPage(brand)}>Visit Site</Button>
-                        <Typography align="center" variant="subtitle2" className={classes.siteName}>{BrandItemDetails["BrandSite"][0]}</Typography>
+                        <Button variant="contained" color="primary" onClick={() => openBrandPage()}>Visit Site</Button>
+                        <Typography align="center" variant="subtitle2" className={classes.siteName}>
+                        {(BrandItemDetails["BrandSite"][0] === "NULL") ?  "" : BrandItemDetails["BrandSite"][0]}
+                        </Typography>
                     </Grid>
                 </Grid>
             </Grid>

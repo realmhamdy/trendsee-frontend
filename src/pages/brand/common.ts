@@ -32,6 +32,21 @@ export interface BrandData {
     most_popular_ad: BrandAd
 }
 
+export interface BrandDetails {
+    Address: string[]
+    BrandName: string[]
+    BrandSite: string[]
+    Categories: string[]
+    CoverImage: string[]
+    Description: string[]
+    FBurl: string[]
+    InstagramURL: string[]
+    ProfileImage: string[]
+    ShopifySite: string[]
+    Timestamp: string[]
+    TrustpilotSite: string[]
+}
+
 
 export function generateRandomLineChartData(id: number) {
     return [{

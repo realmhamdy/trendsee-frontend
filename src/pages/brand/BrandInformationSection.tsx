@@ -1,4 +1,4 @@
-import React from "react"
+import React,{useEffect} from "react"
 
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
@@ -11,10 +11,15 @@ import { BrandData } from "./common"
 
 import {useDispatch,useSelector} from "react-redux"
 
+import { BrandDetails } from "./common"
+
+import { getAbsoluteURL } from "../../utils"
+
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
         coverImg: {
-            width: "100%"
+            width: "100%",
+            height:"500px"
         },
         avatarImg: {
             width: "100%",
@@ -52,58 +57,66 @@ interface Props {
 
 export default function BrandInformationSection({brand}: Props) {
     const classes = useStyles()
-    
-    const BrandName: string[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["BrandName"]))
-    const FBLikes: number[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["FBLikes"]))
-    const FbFollowers: number[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["FbFollowers"]))
-    const NumberFBads: number[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["NumberFBads"]))
-    const BrandList: string[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]))
-    const selectedBrand: number = useSelector(((state:RootStore) => state.PageReduser["selectBrand"]))
+    const brandname:string = useSelector(((state:RootStore) => state.PageReduser["brandname"]))
+    const BrandItemDetails: BrandDetails = useSelector(((state:RootStore) => state.PageReduser["BrandItemDetails"]))
 
-    function renderTags() {
-        return brand.tags.map((tag, index) => (
+   
+
+   
+    function renderTags(data:string[]) {
+        return data.map((tag, index) => (
             <Chip label={tag} key={index} />
         ))
     }
 
-    function openBrandPage(brand: BrandData) {
-        Object.assign(
-            document.createElement("a"),
-            {
-                target: "_blank",
-                href: brand.site
-            }).click()
+    function openBrandPage() {
+        if(BrandItemDetails["BrandSite"][0] !== "NULL"){
+            Object.assign(
+                document.createElement("a"),
+                {
+                    target: "_blank",
+                    href: `${BrandItemDetails["BrandSite"][0]}`
+                }).click()
+        }
+       
     }
 
     return (
         <>
             {/* Cover row */}
             <Grid item xs={12}>
-                <img src={brand.cover} alt="brand cover" className={classes.coverImg} />
+                {(!BrandItemDetails["CoverImage"][0] || BrandItemDetails["CoverImage"][0] === "NULL") ?  "" :<img src={BrandItemDetails["CoverImage"][0]} alt="brand cover" className={classes.coverImg} />}
+               
             </Grid>
             {/* Information row */}
             <Grid container item xs={12}>
                 {/* Avatar */}
                 <Grid item xs={2}>
-                    <Avatar src={brand.avatar} variant="circular" className={classes.avatarImg} />
+                    <Avatar src={BrandItemDetails["ProfileImage"][0]} variant="circular" className={classes.avatarImg} />
                 </Grid>
                 {/* Text information */}
                 <Grid container item xs={7} className={classes.brandTextDataContainer} alignItems="flex-start">
                     <Grid item xs={12}>
-                        <Typography variant="h3" className={classes.brandTitle}>{BrandName[selectedBrand]}</Typography>
+                        <Typography variant="h3" className={classes.brandTitle}>{BrandItemDetails["BrandName"][0]}</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1" className={classes.brandSubtitle}>{brand.address} <span className={classes.circleSeparator}>&#11044;</span> {brand.category} ({brand.type})</Typography>
+                        <Typography variant="subtitle1" className={classes.brandSubtitle}>
+                        {(BrandItemDetails["Address"][0] === "NULL") ?  "" : BrandItemDetails["Address"][0]}
+                        </Typography>
                     </Grid>
                     <Grid item xs={12} className={classes.brandTagsContainer}>
-                        {renderTags()}
+                        {/* {renderTags()}   */}
+                       
+                        {(!BrandItemDetails["Categories"][0] ||BrandItemDetails["Categories"][0] === "NULL") ?  "" : renderTags(BrandItemDetails["Categories"])}
                     </Grid>
                 </Grid>
                 {/* Brand link */}
                 <Grid container item xs={3} alignItems="center" justify="flex-end">
                     <Grid item xs={4}>
-                        <Button variant="contained" color="primary" onClick={() => openBrandPage(brand)}>Visit Site</Button>
-                        <Typography align="center" variant="subtitle2" className={classes.siteName}>{new URL(brand.site).hostname}</Typography>
+                        <Button variant="contained" color="primary" onClick={() => openBrandPage()}>Visit Site</Button>
+                        <Typography align="center" variant="subtitle2" className={classes.siteName}>
+                        {(BrandItemDetails["BrandSite"][0] === "NULL") ?  "" : BrandItemDetails["BrandSite"][0]}
+                        </Typography>
                     </Grid>
                 </Grid>
             </Grid>

@@ -1,0 +1,19 @@
+.resultBox h5
+{
+  height: 32px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.resultBox p
+{
+  height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.resultBox > div > div
+{
+  height: 45px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

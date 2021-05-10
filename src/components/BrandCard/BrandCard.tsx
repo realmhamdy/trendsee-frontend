@@ -167,9 +167,9 @@ const BrandCard:FC<Props> = (props) => {
  
 
     return (
-        <Grid item xs={4}>
+        <Grid item xs={4} className="resultBox">
             <Paper variant="outlined" className={classes.resultCardPaper}>
-                <Avatar src={Brand.ProfileImage} variant="circular"/>
+                <Avatar style={{cursor:"pointer"}} onClick={()=>redirectpage(Brand.brandname)} src={Brand.ProfileImage} variant="circular"/>
                 <Typography variant="h5" onClick={()=>redirectpage(Brand.brandname)}>
                     <strong style={{cursor:"pointer"}}>
                     {Brand.brandname}

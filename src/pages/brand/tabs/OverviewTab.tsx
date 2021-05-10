@@ -1,5 +1,5 @@
-import React from "react"
-
+import React,{useEffect} from "react"
+import {useDispatch,useSelector} from "react-redux"
 import Box from "@material-ui/core/Box"
 import Grid from "@material-ui/core/Grid"
 import IconButton from "@material-ui/core/IconButton"
@@ -14,6 +14,7 @@ import InfoIcon from "@material-ui/icons/Info"
 import FacebookIcon from "@material-ui/icons/Facebook"
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"
 import StarsIcon from "@material-ui/icons/Stars"
+import Instagram from "@material-ui/icons/Instagram"
 import RedditIcon from "@material-ui/icons/Reddit"
 import ShareIcon from "@material-ui/icons/Share"
 import ThumbUpIcon from "@material-ui/icons/ThumbUp"
@@ -25,6 +26,11 @@ import { BrandData } from "../common"
 import ReportsOverviewHeader from "../components/ReportsOverviewHeader"
 import LineChartContainer from "../components/LineChartContainer"
 
+import { getAbsoluteURL } from "../../../utils"
+
+import {RootStore} from "../../../Redux/store"
+
+import { BrandDetails } from "../common"
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -176,16 +182,28 @@ interface Props {
 
 export default function OverviewTab({ brand }: Props) {
     const classes = useStyles()
+   
+    const BrandItemDetails: BrandDetails = useSelector(((state:RootStore) => state.PageReduser["BrandItemDetails"]))
+
     return (
         <Grid container spacing={2}>
             {/* the info/ad column */}
             <Grid item xs={3}>
                 <Paper className={classes.socialPaper}>
-                    <IconWithLink icon={<InfoIcon/>} text={brand.missionStatement}/>
-                    <IconWithLink icon={<FacebookIcon/>} text={"Facebook"} url={brand.social.facebook}/>
-                    <IconWithLink icon={<ShoppingCartIcon/>} text={"Shopify"} url={brand.social.shopify}/>
-                    <IconWithLink icon={<StarsIcon/>} text={"TrustPilot"} url={brand.social.trustpilot}/>
-                    <IconWithLink icon={<RedditIcon/>} text={"Reddit"} url={brand.social.reddit}/>
+                    {(BrandItemDetails["Description"][0] === "NULL" || BrandItemDetails["Description"][0] === null || BrandItemDetails["Description"][0] === "null") ?  "" :
+                     <IconWithLink icon={<InfoIcon/>} text= {BrandItemDetails["Description"][0].replace(/[^a-zA-Z ]/g, "") }/>}
+                   
+                   {(BrandItemDetails["FBurl"][0] === "NULL" ||BrandItemDetails["FBurl"][0] === null ||BrandItemDetails["FBurl"][0] === "null")  ?  "" :
+                    <IconWithLink icon={<FacebookIcon/>} text={"Facebook"} url={BrandItemDetails["FBurl"][0]}/>}
+
+                    {(BrandItemDetails["ShopifySite"][0] === "NULL" || BrandItemDetails["ShopifySite"][0] === null|| BrandItemDetails["ShopifySite"][0] === "null") ?  "" :
+                    <IconWithLink icon={<ShoppingCartIcon/>} text={"Shopify"} url={BrandItemDetails["ShopifySite"][0]}/> }
+
+                     {(BrandItemDetails["InstagramURL"][0] === "NULL" ||BrandItemDetails["InstagramURL"][0] === "null" ||BrandItemDetails["InstagramURL"][0] === null) ?  "" :
+                    <IconWithLink icon={<Instagram/>} text={"Instagram"} url={BrandItemDetails["InstagramURL"][0]}/>}
+
+                    {(BrandItemDetails["TrustpilotSite"][0] === "NULL"|| BrandItemDetails["TrustpilotSite"][0] === "null" || BrandItemDetails["TrustpilotSite"][0] === null) ?  "" :
+                    <IconWithLink icon={<RedditIcon/>} text={"Reddit"} url={ BrandItemDetails["TrustpilotSite"][0]}/>}
                 </Paper>
                 <Paper className={classes.adPaper}>
                     <div className={classes.adPaperTextContainer}>

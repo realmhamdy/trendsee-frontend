@@ -21,7 +21,24 @@ const pageInitialstate : defaultInitialState = {
         Timestamp: []
     },
     loading:false,
-    selectBrand:0
+    selectBrand:0,
+    brandData:{},
+    searchtype:"",
+    brandname:"",
+    BrandItemDetails:{
+        Address: [""],
+        BrandName: [""],
+        BrandSite: [""],
+        Categories: [""],
+        CoverImage: [""],
+        Description: [""],
+        FBurl: [""],
+        InstagramURL: [""],
+        ProfileImage: [""],
+        ShopifySite: [""],
+        Timestamp: [""],
+        TrustpilotSite: [""]
+  }
 }
 
 export const  PageReduser = (state:defaultInitialState = pageInitialstate, actions: actions)=>{
@@ -29,9 +46,25 @@ export const  PageReduser = (state:defaultInitialState = pageInitialstate, actio
         case  "BrandDetails":
         return {
             ...state,
-            brandDetails: actions.payload 
+            brandDetails: actions.payload,
+            searchtype:"searchtype",
         }
-
+        case  "BrandData":
+            return {
+                ...state,
+                brandData: actions.payload,
+                searchtype:"freetext",
+            }
+        case "BrandItemDetails":
+            return {
+                ...state,
+                BrandItemDetails:actions.payload,
+        }
+        case "brandName":
+            return {
+                ...state,
+               brandname:actions.payload,
+            }
         case "Loading":
             return {
                 ...state,

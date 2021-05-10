@@ -1,5 +1,5 @@
-import React from "react"
-import { useDispatch, useSelector } from "react-redux"
+import React,{useEffect} from "react"
+import {useDispatch,useSelector} from "react-redux"
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
 import Chip from "@material-ui/core/Chip"
@@ -17,7 +17,7 @@ import RedditIcon from "@material-ui/icons/Reddit"
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"
 import StarsIcon from "@material-ui/icons/Stars"
 
-import { useLocation, Link as RouterLink, Redirect, useHistory } from "react-router-dom"
+import { useLocation, Link as RouterLink, Redirect,useHistory } from "react-router-dom"
 
 import ReactCountryFlag from "react-country-flag"
 
@@ -25,9 +25,10 @@ import { getAbsoluteURL } from "../../utils"
 
 import Actions from "../Actions/PageActions"
 
-import { RootStore } from "../../Redux/store"
+import {RootStore} from "../../Redux/store"
 import LoadingOverlay from "../../components/LoadOverlay/LoadOverlay"
 import BrandCard from "../../components/BrandCard/BrandCard"
+import BrandCardFreeText from "../../components/BrandCardFreetext/BrandCardFreeytest"
 
 
 
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme: Theme) => {
             },
             "& > *:not(:last-child)": {
                 marginBottom: theme.spacing(1.5)
-            }
+            } 
         },
         brandLabelsContainer: {
             display: "flex",
@@ -87,16 +88,6 @@ const useStyles = makeStyles((theme: Theme) => {
     })
 })
 
-const useChipStyles = makeStyles((theme: Theme) => {
-    return createStyles({
-        scoreChip: {
-            backgroundColor: (props: Score) => props.status == "good" ? "#CBF4C9" : "#F6E5B9",
-            color: (props: Score) => props.status == "good" ? "#0B825D" : "#C44C35",
-            borderRadius: theme.spacing(1),
-            fontWeight: "bold"
-        }
-    })
-})
 
 interface Score {
     title: string
@@ -104,12 +95,26 @@ interface Score {
     status: "good" | "bad"
 }
 
-interface ScoreChipProps {
-    score: Score
+
+interface demointerface{
+    brand:any,
+  
 }
 
-
-
+interface data{
+    Address: string,
+    BrandSite: string,
+    Categories: string,
+    CoverImage: string,
+    Description: string,
+    FBurl:string,
+    InstagramURL: string,
+    ProfileImage: string,
+    ShopifySite: null,
+    Timestamp: string,
+    TrustpilotSite: string,
+    brandname:string
+}
 
 
 export default function SearchResults() {
@@ -117,17 +122,22 @@ export default function SearchResults() {
         return new URLSearchParams(useLocation().search)
     }
     const dispatch = useDispatch()
-
+    
     const query = useQuery()
     const queryString = query.get("q") as string
     const classes = useStyles()
     const [selectedButtonIndex, setSelectedButtonIndex] = React.useState(0)
+   
+    const BrandsData: Record<string, data> = useSelector(((state:RootStore) => state.PageReduser["brandData"]))
+    
+    
+    
+    const BrandName: string[] = useSelector(((state:RootStore) => state.PageReduser["brandDetails"]["BrandName"]))
 
-    const BrandName: string[] = useSelector(((state: RootStore) => state.PageReduser["brandDetails"]["BrandName"]))
+    const loading: boolean = useSelector(((state:RootStore) => state.PageReduser["loading"]))
+ 
+    const searchType:string = useSelector(((state:RootStore) => state.PageReduser["searchtype"]))
 
-    const loading: boolean = useSelector(((state: RootStore) => state.PageReduser["loading"]))
-
-    const btandData: string[] = ["brand"]
     const buttonLabels = [
         "All results",
         "Breaking out",
@@ -138,39 +148,64 @@ export default function SearchResults() {
         "New advertiser",
         "Scaling ads"
     ]
+ 
 
-    React.useEffect(() => {
-        dispatch(Actions.GetBrandDetails())
+    const brand= []
+    let brandlength = 0
+    for(const item in BrandsData){
+        const keydata = BrandsData[item]
+        keydata.brandname = item
+       brand.push(keydata)
+       brandlength = brandlength + 1
+    }
 
+    useEffect(() => {
+      
+       dispatch(Actions.GetFreetextBrandDetails())
+      
     }, [])
-
-
-
+   
+    console.log(BrandsData)
     return (
         <Grid container>
-
-            <LoadingOverlay loading={loading} />
+            <LoadingOverlay loading={loading}/>
+            {BrandsData ? 
             <Grid item xs={12}>
                 <div className={classes.headerContainer}>
+                    {}
                     <Typography variant="h4">Search results for the query <strong>"{query.get("q")}"</strong> <Link component={RouterLink} to="/search-brand"><small>advanced filters</small></Link></Typography>
-                    <Typography variant="h4">6</Typography>
+                    <Typography variant="h4">{brandlength}</Typography>
                 </div>
-                <Divider />
+                <Divider/>
             </Grid>
+             : 
+             <Grid item xs={12}>
+                <div className={classes.headerContainer}>
+                    {}
+                    <Typography variant="h4">No Results for the query <strong>"{query.get("q")}"</strong> <Link component={RouterLink} to="/search-brand"><small>advanced filters</small></Link></Typography>
+                    <Typography variant="h4">{brandlength}</Typography>
+                </div>
+                <Divider/>
+            </Grid>}
             <Grid item xs={12} className={classes.labelButtonsContainer}>
-                {buttonLabels.map((label, index) =>
+                {buttonLabels.map((label, index) => 
                     <Button
                         key={index}
                         variant={selectedButtonIndex == index ? "contained" : "outlined"}
                         color={selectedButtonIndex == index ? "primary" : "default"}
                         size="small"
                         onClick={() => setSelectedButtonIndex(index)}>
-                        {label}
+                            {label}
                     </Button>)}
             </Grid>
             <Grid container item xs={12} className={classes.resultCardsContainer} spacing={2}>
-                {BrandName.map((data, index) => <BrandCard key={index} indexNumber={index} brandName={BrandName} />)}
-
+             {/* { brand.map((data, index) => <BrandCard key={index} indexNumber={index} brand={data}/>)}  */}
+             {
+              searchType === "freetext" ?  (brand.map((data, index) => <BrandCard key={index} indexNumber={index} brand={data}/>)) :""
+            }   
+           
+             
+           
             </Grid>
         </Grid>
     )

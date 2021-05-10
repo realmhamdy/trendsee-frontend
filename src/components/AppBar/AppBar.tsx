@@ -72,14 +72,23 @@ export default function () {
     const [searchTerm, setSearchTerm] = useState("")
     const [autocompleteOptions, setAutocompleteOptions] = useState<string[]>([])
     const [autocompleteOptionsLoading, setAutocompleteOptionsLoading] = useState(false)
+    
     function handleSearchTermChanged(event: React.ChangeEvent<{ value: unknown }>) {
         setSearchTerm(event.target.value as string)
+       
+    }
+    function handelEnter(event:React.KeyboardEvent){
+        if(event.key==="Enter" && searchTerm && searchTerm.length > 2){
+            history.push("/search?" + new URLSearchParams({q: searchTerm}).toString())
+            dispatch(Actions.GetFreetextBrandDetails())
+        }
     }
     function handleSearchAutocompleteSubmitted(event: React.ChangeEvent<unknown>, ...rest: any[]) {
         const value = rest[0] as string
         if (value) {
-            history.push("/search?" + new URLSearchParams({q: value}).toString())
-            dispatch(Actions.GetBrandDetails())
+            //history.push("/search?" + new URLSearchParams({q: value}).toString())
+            history.push("/")
+            dispatch(Actions.GetSelectedBrandData(value))
         }
     }
     interface Response {
@@ -115,6 +124,7 @@ export default function () {
                                     {...params}
                                     value={searchTerm}
                                     onChange={handleSearchTermChanged}
+                                    onKeyPress={handelEnter}
                                     onSubmit={handleSearchAutocompleteSubmitted}
                                     label="Search by name, brands, category"
                                     InputProps={{

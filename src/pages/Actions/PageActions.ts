@@ -16,34 +16,15 @@ interface loading{
   
 
 
-const GetBrandDetails = ()=>{
-    const url = new URL(document.URL)
-    const query = url.searchParams.get("q") as string
-    return (dispatch: Dispatch)=>{
-        console.log("GetBrandDetails Api")
-        const loading : loading = { type:"Loading",payload:true}
-        dispatch(loading)
-        void (async () => {
-            const response = await fetch(getAbsoluteURL(`brands/${query}`))
-            const data: Response = await response.json() as Response  
-    
-            const loading : loading = { type:"Loading",payload:false}
-             dispatch(loading)
-            const payloadData : payloadData = { type:"BrandDetails", payload:data.brand}
-            dispatch(payloadData)
-        })()    
-    }
-}
-
 const GetFreetextBrandDetails = ()=>{
     const url = new URL(document.URL)
 const query = url.searchParams.get("q") as string
+console.log("GetFreetextBrandDetailssss Api")
     return (dispatch: Dispatch)=>{
-        console.log("GetFreetextBrandDetails Api")
+        console.log("GetFreetextBrandDetailssss Api")
         const loading : loading = { type:"Loading",payload:true}
         dispatch(loading)
         void (async () => {
-    
             const response = await fetch(getAbsoluteURL(`brandmatch/${query}`))
             const data: Response = await response.json() as Response  
        
@@ -55,26 +36,11 @@ const query = url.searchParams.get("q") as string
     }
 }
 
-const GetBrandData = (brandname:string)=>{
 
-    return (dispatch: Dispatch)=>{
-        console.log("GetBrandData Api")
-        const loading : loading = { type:"Loading",payload:true}
-        dispatch(loading)
-        void (async () => {
-            const response = await fetch(getAbsoluteURL(`details/${brandname}`))
-            const data: Response = await response.json() as Response      
-            const loading : loading = { type:"Loading",payload:false}
-            dispatch(loading)
-           const payloadData : payloadData = { type:"BrandItemDetails", payload:data.brand}
-           dispatch(payloadData)
-        })()    
-    }
-}
+
 
 const GetSelectedBrandData = (value:string)=>{
-    const url = new URL(document.URL)
-const query = url.searchParams.get("q") as string
+
     return (dispatch: Dispatch)=>{
         console.log("GetSelectedBrandData Api")
         const loading : loading = { type:"Loading",payload:true}
@@ -91,9 +57,8 @@ const query = url.searchParams.get("q") as string
 }
 
 const Actions = {
-    GetBrandDetails,
+
     GetFreetextBrandDetails,
-    GetBrandData,
     GetSelectedBrandData,
 }
 

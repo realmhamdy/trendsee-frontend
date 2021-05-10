@@ -78,8 +78,7 @@ export default function () {
        
     }
     function handelEnter(event:React.KeyboardEvent){
-        
-        if(event.key==="Enter" && searchTerm){
+        if(event.key==="Enter" && searchTerm && searchTerm.length > 2){
             history.push("/search?" + new URLSearchParams({q: searchTerm}).toString())
             dispatch(Actions.GetFreetextBrandDetails())
         }

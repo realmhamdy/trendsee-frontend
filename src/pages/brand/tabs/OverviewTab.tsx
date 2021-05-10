@@ -190,15 +190,20 @@ export default function OverviewTab({ brand }: Props) {
             {/* the info/ad column */}
             <Grid item xs={3}>
                 <Paper className={classes.socialPaper}>
-                    <IconWithLink icon={<InfoIcon/>} text= {(BrandItemDetails["Description"][0] === "NULL") ?  "" : BrandItemDetails["Description"][0].replace(/[^a-zA-Z ]/g, "") }/>
+                    {(BrandItemDetails["Description"][0] === "NULL" || BrandItemDetails["Description"][0] === null || BrandItemDetails["Description"][0] === "null") ?  "" :
+                     <IconWithLink icon={<InfoIcon/>} text= {BrandItemDetails["Description"][0].replace(/[^a-zA-Z ]/g, "") }/>}
+                   
+                   {(BrandItemDetails["FBurl"][0] === "NULL" ||BrandItemDetails["FBurl"][0] === null ||BrandItemDetails["FBurl"][0] === "null")  ?  "" :
+                    <IconWithLink icon={<FacebookIcon/>} text={"Facebook"} url={BrandItemDetails["FBurl"][0]}/>}
 
-                    <IconWithLink icon={<FacebookIcon/>} text={"Facebook"} url={(BrandItemDetails["FBurl"][0] === "NULL") ?  "" : BrandItemDetails["FBurl"][0]}/>
+                    {(BrandItemDetails["ShopifySite"][0] === "NULL" || BrandItemDetails["ShopifySite"][0] === null|| BrandItemDetails["ShopifySite"][0] === "null") ?  "" :
+                    <IconWithLink icon={<ShoppingCartIcon/>} text={"Shopify"} url={BrandItemDetails["ShopifySite"][0]}/> }
 
-                    <IconWithLink icon={<ShoppingCartIcon/>} text={"Shopify"} url={(BrandItemDetails["ShopifySite"][0] === "NULL") ?  "" : BrandItemDetails["ShopifySite"][0]}/>
+                     {(BrandItemDetails["InstagramURL"][0] === "NULL" ||BrandItemDetails["InstagramURL"][0] === "null" ||BrandItemDetails["InstagramURL"][0] === null) ?  "" :
+                    <IconWithLink icon={<Instagram/>} text={"Instagram"} url={BrandItemDetails["InstagramURL"][0]}/>}
 
-                    <IconWithLink icon={<Instagram/>} text={"Instagram"} url={(BrandItemDetails["InstagramURL"][0] === "NULL") ?  "" : BrandItemDetails["InstagramURL"][0]}/>
-
-                    <IconWithLink icon={<RedditIcon/>} text={"Reddit"} url={(BrandItemDetails["TrustpilotSite"][0] === "NULL") ?  "" : BrandItemDetails["TrustpilotSite"][0]}/>
+                    {(BrandItemDetails["TrustpilotSite"][0] === "NULL"|| BrandItemDetails["TrustpilotSite"][0] === "null" || BrandItemDetails["TrustpilotSite"][0] === null) ?  "" :
+                    <IconWithLink icon={<RedditIcon/>} text={"Reddit"} url={ BrandItemDetails["TrustpilotSite"][0]}/>}
                 </Paper>
                 <Paper className={classes.adPaper}>
                     <div className={classes.adPaperTextContainer}>

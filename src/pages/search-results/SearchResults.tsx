@@ -1,4 +1,4 @@
-import React from "react"
+import React,{useEffect} from "react"
 import {useDispatch,useSelector} from "react-redux"
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
@@ -151,24 +151,42 @@ export default function SearchResults() {
  
 
     const brand= []
+    let brandlength = 0
     for(const item in BrandsData){
         const keydata = BrandsData[item]
         keydata.brandname = item
        brand.push(keydata)
+       brandlength = brandlength + 1
     }
+
+    useEffect(() => {
+      
+       dispatch(Actions.GetFreetextBrandDetails())
+      
+    }, [])
    
-    
+    console.log(BrandsData)
     return (
         <Grid container>
-            
             <LoadingOverlay loading={loading}/>
+            {BrandsData ? 
             <Grid item xs={12}>
                 <div className={classes.headerContainer}>
+                    {}
                     <Typography variant="h4">Search results for the query <strong>"{query.get("q")}"</strong> <Link component={RouterLink} to="/search-brand"><small>advanced filters</small></Link></Typography>
-                    <Typography variant="h4">6</Typography>
+                    <Typography variant="h4">{brandlength}</Typography>
                 </div>
                 <Divider/>
             </Grid>
+             : 
+             <Grid item xs={12}>
+                <div className={classes.headerContainer}>
+                    {}
+                    <Typography variant="h4">No Results for the query <strong>"{query.get("q")}"</strong> <Link component={RouterLink} to="/search-brand"><small>advanced filters</small></Link></Typography>
+                    <Typography variant="h4">{brandlength}</Typography>
+                </div>
+                <Divider/>
+            </Grid>}
             <Grid item xs={12} className={classes.labelButtonsContainer}>
                 {buttonLabels.map((label, index) => 
                     <Button
@@ -185,9 +203,7 @@ export default function SearchResults() {
              {
               searchType === "freetext" ?  (brand.map((data, index) => <BrandCard key={index} indexNumber={index} brand={data}/>)) :""
             }   
-            {
-              searchType === "searchtype" ?  (BrandName.map((data, index) => <BrandCardFreeText key={index} indexNumber={index}  brandName={BrandName}/>)) :""
-            }
+           
              
            
             </Grid>

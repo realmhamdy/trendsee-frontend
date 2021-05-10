@@ -43,7 +43,9 @@ interface Props {
     brand: BrandData
 }
 
-export default function BrandTabs({ brand }: Props) {
+export default function 
+
+BrandTabs({ brand }: Props) {
     const classes = useStyles()
     const [tabIndex, setTabIndex] = useState(0)
     const [brandFavorited, setBrandFavorited] = useState(false)

@@ -113,10 +113,9 @@ export default function BrandInformationSection({brand}: Props) {
                 {/* Brand link */}
                 <Grid container item xs={3} alignItems="center" justify="flex-end">
                     <Grid item xs={4}>
-                        <Button variant="contained" color="primary" onClick={() => openBrandPage()}>Visit Site</Button>
-                        <Typography align="center" variant="subtitle2" className={classes.siteName}>
-                        {(BrandItemDetails["BrandSite"][0] === "NULL") ?  "" : BrandItemDetails["BrandSite"][0]}
-                        </Typography>
+                        {(BrandItemDetails["BrandSite"][0] === "NULL"||BrandItemDetails["BrandSite"][0] === "null"||BrandItemDetails["BrandSite"][0] === null||BrandItemDetails["BrandSite"][0] === "") ? 
+                        ""
+                        : <Button variant="contained" color="primary" onClick={() => openBrandPage()}>Visit Site</Button>}
                     </Grid>
                 </Grid>
             </Grid>

@@ -151,7 +151,7 @@ const BrandCard: FC<Props> = (props) => {
     const selectBrand: selectBrand = { type: "selectBrand", payload: props.indexNumber }
     dispatch(selectBrand)
     const redirectpage = (name: string) => {
-        history.push("/")
+        history.push(`/brand/${name.replace(/ /g, "-")}`)
         dispatch({ type: "brandName", payload: name })
         dispatch(Actions.GetSelectedBrandData(name))
     }

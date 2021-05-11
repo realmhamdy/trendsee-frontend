@@ -1,6 +1,6 @@
 import React from "react"
-import {useState, useEffect} from "react"
-import {useDispatch} from "react-redux"
+import { useState, useEffect } from "react"
+import { useDispatch } from "react-redux"
 import { createStyles, makeStyles, Theme, fade } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
 import Autocomplete from "@material-ui/lab/Autocomplete"
@@ -72,15 +72,15 @@ export default function () {
     const [searchTerm, setSearchTerm] = useState("")
     const [autocompleteOptions, setAutocompleteOptions] = useState<string[]>([])
     const [autocompleteOptionsLoading, setAutocompleteOptionsLoading] = useState(false)
-    
+
     function handleSearchTermChanged(event: React.ChangeEvent<{ value: unknown }>) {
         setSearchTerm(event.target.value as string)
-       
+
     }
-    function handelEnter(event:React.KeyboardEvent){
-        
-        if(event.key==="Enter" && searchTerm && searchTerm.length > 2){
-            history.push("/search?" + new URLSearchParams({q: searchTerm}).toString())
+    function handelEnter(event: React.KeyboardEvent) {
+
+        if (event.key === "Enter" && searchTerm && searchTerm.length > 2) {
+            history.push("/search?" + new URLSearchParams({ q: searchTerm }).toString())
             dispatch(Actions.GetFreetextBrandDetails())
         }
     }
@@ -88,7 +88,7 @@ export default function () {
         const value = rest[0] as string
         if (value) {
             //history.push("/search?" + new URLSearchParams({q: value}).toString())
-            history.push("/")
+            history.push(`/brand/${value.replace(/ /g, "-")}`)
             dispatch(Actions.GetSelectedBrandData(value))
         }
     }
@@ -98,7 +98,7 @@ export default function () {
     React.useEffect(() => {
         setAutocompleteOptionsLoading(true)
         void (async () => {
-            const response = await fetch(getAbsoluteURL("/brandlist?" + new URLSearchParams({q: searchTerm}).toString()))
+            const response = await fetch(getAbsoluteURL("/brandlist?" + new URLSearchParams({ q: searchTerm }).toString()))
             const data: Response = await response.json() as Response
             setAutocompleteOptions(data.brands)
             setAutocompleteOptionsLoading(false)
@@ -132,7 +132,7 @@ export default function () {
                                         ...params.InputProps,
                                         startAdornment: (
                                             <InputAdornment position="start">
-                                                <SearchIcon/>
+                                                <SearchIcon />
                                             </InputAdornment>
                                         ),
                                         endAdornment: (
@@ -147,10 +147,10 @@ export default function () {
                                     size="small"
                                     margin="none"
                                 />
-                            )}/>
+                            )} />
                     </div>
                     <IconButton className={classes.helpIconButton}>
-                        <HelpOutlineIcon/>
+                        <HelpOutlineIcon />
                     </IconButton>
                     <Avatar src="/images/dude.jpg" alt="Dude avatar" variant="rounded" className={classes.avatar} />
                 </Toolbar>

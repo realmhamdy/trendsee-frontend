@@ -59,7 +59,7 @@ export default function () {
   const dispatch = useDispatch()
   
   useEffect(() => {
-  
+    // dispatch(Actions.GetSelectedBrandData(brandname))
    
   void (async () => {
     

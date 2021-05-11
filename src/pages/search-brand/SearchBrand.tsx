@@ -467,11 +467,9 @@ export default function SearchBrand() {
     function handleTabChanged(event: React.ChangeEvent<unknown>, newTabIndex: number) {
         setTabIndex(newTabIndex)
     }
-    React.useEffect(() => {
-        
-        alert("ok")
+    // React.useEffect(() => {
            
-        }, [])
+    //     }, [])
     return (
         <Grid container>
             <Grid item xs={12}>

@@ -19,9 +19,7 @@ interface loading{
 const GetFreetextBrandDetails = ()=>{
     const url = new URL(document.URL)
 const query = url.searchParams.get("q") as string
-console.log("GetFreetextBrandDetailssss Api")
     return (dispatch: Dispatch)=>{
-        console.log("GetFreetextBrandDetailssss Api")
         const loading : loading = { type:"Loading",payload:true}
         dispatch(loading)
         void (async () => {

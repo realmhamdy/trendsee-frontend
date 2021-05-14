@@ -85,7 +85,7 @@ export default function () {
         }
     }
     function handleSearchAutocompleteSubmitted(event: React.ChangeEvent<unknown>, ...rest: any[]) {
-        const value = rest[0] as string
+        const value = rest[0] as string 
         if (value) {
             //history.push("/search?" + new URLSearchParams({q: value}).toString())
             history.push(`/brand/${value.replace(/ /g, "-")}`)

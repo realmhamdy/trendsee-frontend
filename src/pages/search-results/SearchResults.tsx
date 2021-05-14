@@ -163,8 +163,7 @@ export default function SearchResults() {
        dispatch(Actions.GetFreetextBrandDetails())
       
     }, [])
-   
-    console.log(BrandsData)
+
     return (
         <Grid container>
             <LoadingOverlay loading={loading}/>

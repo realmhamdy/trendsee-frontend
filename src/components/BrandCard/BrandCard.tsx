@@ -158,12 +158,7 @@ const BrandCard: FC<Props> = (props) => {
     const Brand: data = props.brand
 
     const classes = useStyles()
-    const tommyLabels = ["Breaking out", "Sudden growth", "Scaling ads"]
-    const scores: Score[] = [
-        { title: "Scaling Score", score: 73, status: "good" },
-        { title: "Revenue Score", score: 85, status: "bad" }
-    ]
-
+   
 
 
 

@@ -35,22 +35,22 @@ const query = url.searchParams.get("q") as string
 }
 
 
-
-
 const GetSelectedBrandData = (value:string)=>{
 
     return (dispatch: Dispatch)=>{
-        console.log("GetSelectedBrandData Api")
+      
         const loading : loading = { type:"Loading",payload:true}
         dispatch(loading)
-        void (async () => {
-            const response = await fetch(getAbsoluteURL(`details/${value}`))
-            const data: Response = await response.json() as Response    
-            const loading : loading = { type:"Loading",payload:false}
-            dispatch(loading)
-           const payloadData : payloadData = { type:"BrandItemDetails", payload:data.brand}
-           dispatch(payloadData)
-        })()    
+   
+            void (async () => {
+                const response = await fetch(getAbsoluteURL(`details/${value}`))
+                const data: Response = await response.json() as Response    
+                const loading : loading = { type:"Loading",payload:false}
+                dispatch(loading)
+               const payloadData : payloadData = { type:"BrandItemDetails", payload:data.brand}
+               dispatch(payloadData)
+            })()  
+       
     }
 }
 

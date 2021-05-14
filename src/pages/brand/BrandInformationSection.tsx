@@ -15,6 +15,8 @@ import { BrandDetails } from "./common"
 
 import { getAbsoluteURL } from "../../utils"
 
+import Actions from "../Actions/PageActions"
+
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
         coverImg: {
@@ -55,12 +57,29 @@ interface Props {
     brand: BrandData
 }
 
+
 export default function BrandInformationSection({brand}: Props) {
     const classes = useStyles()
-    const brandname:string = useSelector(((state:RootStore) => state.PageReduser["brandname"]))
+
+    const dispatch = useDispatch()
+    
     const BrandItemDetails: BrandDetails = useSelector(((state:RootStore) => state.PageReduser["BrandItemDetails"]))
 
-   
+    // const BrandSessionStorage= JSON.parse(sessionStorage.getItem("BrandItemDetails") || "{}")
+    console.log("BrandName",BrandItemDetails["BrandName"][0])
+
+    if(BrandItemDetails["BrandName"][0]){
+        sessionStorage.setItem("BrandName",BrandItemDetails["BrandName"][0])
+    }else{
+        const BrandData =   sessionStorage.getItem("BrandName")
+        if(BrandData !== null){
+            const data = BrandData
+            console.log("BrandData",BrandData)
+           dispatch(Actions.GetSelectedBrandData(data))
+        }
+      
+    }
+    
 
    
     function renderTags(data:string[]) {

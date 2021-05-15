@@ -66,7 +66,6 @@ export default function BrandInformationSection({brand}: Props) {
     const BrandItemDetails: BrandDetails = useSelector(((state:RootStore) => state.PageReduser["BrandItemDetails"]))
 
     // const BrandSessionStorage= JSON.parse(sessionStorage.getItem("BrandItemDetails") || "{}")
-    console.log("BrandName",BrandItemDetails["BrandName"][0])
 
     if(BrandItemDetails["BrandName"][0]){
         sessionStorage.setItem("BrandName",BrandItemDetails["BrandName"][0])
@@ -74,7 +73,6 @@ export default function BrandInformationSection({brand}: Props) {
         const BrandData =   sessionStorage.getItem("BrandName")
         if(BrandData !== null){
             const data = BrandData
-            console.log("BrandData",BrandData)
            dispatch(Actions.GetSelectedBrandData(data))
         }
       

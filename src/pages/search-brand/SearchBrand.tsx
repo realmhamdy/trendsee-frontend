@@ -1,5 +1,5 @@
 import React from "react"
-import {useState} from "react"
+import {useState, useEffect} from "react"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import Button from "@material-ui/core/Button"
 import Divider from "@material-ui/core/Divider"
@@ -36,7 +36,7 @@ import AvatarTableCell from "../../components/AvatarTableCell"
 import CountryLinkTableCell from "../../components/CountryLinkTableCell"
 import ScoreTableCell from "../../components/ScoreTableCell"
 import { countries, brandTableData, BrandTableRowData, ReviewsColumn } from "./data"
-import { ScoreColumn, formatNumber } from "../../utils"
+import { ScoreColumn, formatNumber, getAbsoluteURL } from "../../utils"
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -453,6 +453,7 @@ function BrandsTable() {
 
 export default function SearchBrand() {
     const classes = useStyles()
+    const tableclasses = useBrandsTableStyles()
     const theme = useTheme()
     const tabNames = [
         "Breaking out",
@@ -464,6 +465,53 @@ export default function SearchBrand() {
         "Scaling ads"
     ]
     const [tabIndex, setTabIndex] = React.useState(0)
+    const [searchTerm, setSearchTerm] = useState("")
+    const [brandList,setbrandList] = useState<string[]>([])
+    useEffect(() => {
+        interface Response {
+            brands: string[]
+        }
+        void (async () => {
+            const response = await fetch(getAbsoluteURL("/brandlist?" + new URLSearchParams({ q: searchTerm }).toString()))
+            const data: Response = await response.json() as Response
+            setbrandList(data.brands)
+          
+        })() 
+        
+    }, [])
+
+    const scalingScore:ScoreColumn = {
+        current: 79,
+        previous: 77.9,
+        status: "good",
+    }
+
+    const revenueScore:ScoreColumn = {
+    current: 81,
+    previous: 79.9,
+    status: "good",
+    }
+    const BrandList = brandList.map((data,index)=>{
+        if(index < 15){
+            return (
+                <TableRow key={index}>
+                   <AvatarTableCell avatar={"/images/brands/tommyhilfiger/avatar.png"} label={data}/>
+                   <CountryLinkTableCell flag={"US"} link={"http://www.example.com/"}/>
+                   <ScoreTableCell score={scalingScore}/>
+                    <ScoreTableCell score={revenueScore}/>
+                    <TableCell>12,878</TableCell>
+                    <TableCell>12,878</TableCell>
+                    <TableCell>12,878</TableCell>
+                    <TableCell>12,878</TableCell>
+                    <TableCell>12,878</TableCell>
+                    <TableCell>12,878</TableCell>
+                    <TableCell>12,878</TableCell>
+                </TableRow>
+            )
+        }
+       
+    })
+
     function handleTabChanged(event: React.ChangeEvent<unknown>, newTabIndex: number) {
         setTabIndex(newTabIndex)
     }
@@ -497,14 +545,81 @@ export default function SearchBrand() {
             </Grid>
             <Grid container item xs={12} className={classes.brandsSectionContainer}>
                 <Grid container item xs={12} justify="space-between">
-                    <Typography variant="h4" className={classes.brandsHeader}>Brands <span>25,934</span></Typography>
+                    <Typography variant="h4" className={classes.brandsHeader}>Brands <span>{brandList.length}</span></Typography>
                     <div>
                         <Button variant="outlined" endIcon={<CloudDownloadIcon/>} size="small">Download</Button>
                         <Button variant="outlined" startIcon={<DateRangeIcon/>} endIcon={<KeyboardArrowDownIcon/>} size="small" style={{ marginLeft: theme.spacing(1)}}>Last 6 months</Button>
                     </div>
                 </Grid>
                 <Grid item xs={12}>
-                    <BrandsTable/>
+                  
+
+                    <TableContainer>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>
+                            <TableSortLabel
+                               >
+                                Brand Name
+                            </TableSortLabel>
+                        </TableCell>
+                        <TableCell style={{ minWidth: 100 }}></TableCell>
+                        <TableCell>
+                            <div className={tableclasses.iconCell}>
+                                <InfoIcon color="disabled" fontSize="small"/>
+                                <TableSortLabel>
+                                    Scaling Score
+                                </TableSortLabel>
+                            </div>
+                        </TableCell>
+                        <TableCell>
+                            <div className={tableclasses.iconCell}>
+                                <InfoIcon color="disabled" fontSize="small"/>
+                                <TableSortLabel>
+                                    Revenue Score
+                                </TableSortLabel>
+                            </div>
+                        </TableCell>
+                        <TableCell>
+                            <div className={tableclasses.iconCell}>
+                                <SettingsIcon color="disabled" fontSize="small"/>
+                                <TableSortLabel>
+                                    Reviews
+                                </TableSortLabel>
+                            </div>
+                        </TableCell>
+                        <TableCell>
+                            <TableSortLabel>
+                                    Trust Pilot
+                            </TableSortLabel>
+                        </TableCell>
+                        <TableCell>
+                            <TableSortLabel>
+                                    Product
+                            </TableSortLabel>
+                        </TableCell>
+                        <TableCell>
+                            <TableSortLabel>
+                                    FB's
+                            </TableSortLabel>
+                        </TableCell>
+                        <TableCell>
+                            <TableSortLabel>Google's</TableSortLabel>
+                        </TableCell>
+                        <TableCell>
+                            <TableSortLabel>
+                                Amazon's
+                            </TableSortLabel>
+                        </TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                   {BrandList}
+                </TableBody>
+            </Table>
+        </TableContainer>
+  
                 </Grid>
             </Grid>
         </Grid>

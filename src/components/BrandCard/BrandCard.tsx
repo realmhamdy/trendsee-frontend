@@ -145,6 +145,15 @@ interface data {
     brandname: string
 }
 
+function stringTruncate(str: string) {
+    const trimmedStr = str.replace(/[^a-zA-Z ]/g, "")
+    if (trimmedStr.length > 95) {
+        return trimmedStr.slice(0, 95) + "..."
+    } else {
+        return trimmedStr
+    }
+}
+
 const BrandCard: FC<Props> = (props) => {
     const history = useHistory()
     const dispatch = useDispatch()
@@ -158,7 +167,7 @@ const BrandCard: FC<Props> = (props) => {
     const Brand: data = props.brand
 
     const classes = useStyles()
-   
+
 
 
 
@@ -179,7 +188,7 @@ const BrandCard: FC<Props> = (props) => {
                 </div>
                 <div className={classes.brandLabelsContainer}>
 
-                    {(Brand.Description == "NULL" || Brand.Description == null || Brand.Description == "null") ? "" : Brand.Description.replace(/[^a-zA-Z ]/g, "")}
+                    {(Brand.Description == "NULL" || Brand.Description == null || Brand.Description == "null") ? "" :stringTruncate(Brand.Description)}
                 </div>
                 {/* <Typography variant="body1">{} followers &bull; {}ads</Typography> */}
                 {/* <div className={classes.brandLabelsContainer}> */}

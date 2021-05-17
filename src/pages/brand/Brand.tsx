@@ -58,32 +58,23 @@ export default function () {
   const loading: boolean = useSelector(((state:RootStore) => state.PageReduser["loading"]))
   const dispatch = useDispatch()
   
-  useEffect(() => {
-    // dispatch(Actions.GetSelectedBrandData(brandname))
-   
-  void (async () => {
-    
-    const response = await fetch(getAbsoluteURL("fb/&pizza"),{
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({"date":[{"x" : "datetime", "y" : "2021-4-26"}, {"x" : "datetime", "y" : "2021-4-28"}]})
-    })
-    const data: Response = await response.json() as Response  
-   
+  const onBackButtonEvent = () => {
+
+    console.log("window.location.pathname",window.location.pathname)
+   const key = window.location.pathname.split("/brand/").pop()
+    if(key !== undefined){
+     const value =  key.replace(/-/g," ")
+     dispatch(Actions.GetSelectedBrandData(value))
+    }
+ }
+ useEffect(()=>{
+   window.history.pushState(null, window.location.pathname)
+   window.addEventListener("popstate",onBackButtonEvent)
+   return () => {
+     window.removeEventListener("popstate",onBackButtonEvent)
+   }
+ },[])
  
-})() 
-
-void (async () => {
- 
-  const response = await fetch(getAbsoluteURL("fb/7Amenfant"))
-  const data: Response = await response.json() as Response  
-
-
-})() 
-   
-  }, [brandname])
   return (
     <Grid container spacing={1}>
       <LoadingOverlay loading={loading}/>

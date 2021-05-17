@@ -492,7 +492,7 @@ export default function SearchBrand() {
     status: "good",
     }
     const BrandList = brandList.map((data,index)=>{
-        if(index < 15){
+        if(index < 150){
             return (
                 <TableRow key={index}>
                    <AvatarTableCell avatar={"/images/brands/tommyhilfiger/avatar.png"} label={data}/>

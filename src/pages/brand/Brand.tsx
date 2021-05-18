@@ -59,14 +59,13 @@ export default function () {
   const dispatch = useDispatch()
   
   const onBackButtonEvent = () => {
-
-    console.log("window.location.pathname",window.location.pathname)
    const key = window.location.pathname.split("/brand/").pop()
     if(key !== undefined){
      const value =  key.replace(/-/g," ")
      dispatch(Actions.GetSelectedBrandData(value))
     }
  }
+
  useEffect(()=>{
    window.history.pushState(null, window.location.pathname)
    window.addEventListener("popstate",onBackButtonEvent)

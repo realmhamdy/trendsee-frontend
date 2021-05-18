@@ -88,7 +88,7 @@ export default function LineChartContainer({ change, headerText, headerNumber, i
                 <Chip label={changeText} className={classes.lineChartChip}/>
             </div>
             <div className={classes.lineChartContainer}>
-                <Typography variant="h6" className={classes.lineChartHeaderNumber}>{123}</Typography>
+                <Typography variant="h6" className={classes.lineChartHeaderNumber}>{headerNumber}</Typography>
                 {/* tslint-ignore no-unsafe-assignment, no-unsafe-call */}
                 <ResponsiveLine
                     data={generateRandomLineChartData(id)}

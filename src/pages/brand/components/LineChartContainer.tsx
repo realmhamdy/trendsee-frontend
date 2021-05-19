@@ -101,7 +101,7 @@ export default function LineChartContainer({ change, headerText, headerNumber, i
                 <Typography variant="h6" className={classes.lineChartHeaderNumber}>{headerNumber}</Typography>
                 {/* tslint-ignore no-unsafe-assignment, no-unsafe-call */}
                 <ResponsiveLine
-                    data={data}
+                    data={headerText === "Facebook followers" ? data : generateRandomLineChartData(id)}
                     margin={{top: 16, bottom: 24}}
                     xScale={{ type: "time", format: "%Y-%m-%d", precision: "day" }}
                     xFormat="time:%Y-%m-%d"

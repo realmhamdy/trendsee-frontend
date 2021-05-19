@@ -270,10 +270,10 @@ function FilterPopper({ open, anchorEl, onDone }: FilterPopperProps) {
 
 export default function AdsTab() {
     const lineChartData: LineChartContainerProps[] = [
-        { id: 1, headerNumber: "6,551", headerText: "Lifetime Ad Count", change: 1.0},
-        { id: 2, headerNumber: "978", headerText: "Lifetime Unique Ad Count", change: 0.0},
-        { id: 3, headerNumber: "13,831,376", headerText: "Typical Time Between Ad Updates", change: -1.3},
-        { id: 4, headerNumber: "1,803", headerText: "Typical Time To Publish New Ad", change: 4.0},
+        { id: 1, headerNumber: "6,551", headerText: "Lifetime Ad Count", change: 1.0,data:[{id:1,data: []}]},
+        { id: 2, headerNumber: "978", headerText: "Lifetime Unique Ad Count", change: 0.0,data:[{id:1,data: []}]},
+        { id: 3, headerNumber: "13,831,376", headerText: "Typical Time Between Ad Updates", change: -1.3,data:[{id:1,data: []}]},
+        { id: 4, headerNumber: "1,803", headerText: "Typical Time To Publish New Ad", change: 4.0,data:[{id:1,data: []}]},
     ]
     interface CountryAdDataPoint {
         country: string

@@ -1,5 +1,6 @@
-import React,{useEffect} from "react"
+import React,{useEffect,useState} from "react"
 import {useDispatch,useSelector} from "react-redux"
+import { DateTime } from "luxon"
 import Box from "@material-ui/core/Box"
 import Grid from "@material-ui/core/Grid"
 import IconButton from "@material-ui/core/IconButton"
@@ -185,6 +186,66 @@ export default function OverviewTab({ brand }: Props) {
    
     const BrandItemDetails: BrandDetails = useSelector(((state:RootStore) => state.PageReduser["BrandItemDetails"]))
 
+
+    const [grafhData,setgrafhData] = useState<{ data: any[]; id: number; }[]>([{data:[],id: 1}])
+        
+
+    useEffect(()=>{
+            interface Response {
+                brand: {
+                    FBLikes: number[],
+                    FbFollowers: number[],
+                    NumberFBads: number[],
+                    Timestamp: string[]
+                    }
+            }
+
+            interface Reditresponce {
+                brand : any[]
+            }
+            
+            interface Grafhdata{
+                x: string,
+                y: number
+            }
+    
+            const dateData = {"date":[{"x" : "datetime", "y" : "2021-4-26"}, {"x" : "datetime", "y" : "2021-4-28"}]}
+            const postData = {
+             method: "POST", 
+             headers: {
+               "Content-Type": "application/json"
+             },
+             body: JSON.stringify(dateData) 
+           }
+          
+            const BrandData =   sessionStorage.getItem("BrandName")
+            
+            if(BrandData !== null){
+            void (async () => {
+             const response = await fetch(getAbsoluteURL(`fb/${BrandData}`),postData)
+             const fbGraphdata: Response = await response.json() as Response
+             const fbGrafh = []    
+                for (let index = 0; index < fbGraphdata.brand["FbFollowers"].length; index++) {
+                   const date = fbGraphdata.brand["Timestamp"][index]
+                   const grafhdata =  {
+                     x : `${new Date(date).getFullYear()}-${new Date(date).getMonth()+1}-${new Date(date).getDate()}`,
+                     y : fbGraphdata
+                     .brand["FbFollowers"][index],
+                    }
+                    fbGrafh.push(grafhdata)
+                }
+    
+            const fbData = [{id:1,data: fbGrafh}]
+            setgrafhData(fbData)
+
+            const reditresponse = await fetch(getAbsoluteURL(`redit/${BrandData}`),postData)
+            const reditGraphdata: Reditresponce = await reditresponse.json() as Reditresponce
+            
+            
+           })()
+        }
+        },[BrandItemDetails])
+    
     return (
         <Grid container spacing={2}>
             {/* the info/ad column */}
@@ -241,12 +302,12 @@ export default function OverviewTab({ brand }: Props) {
                 {/* the line chart grid */}
                 <Grid container item xs={12} className={classes.lineChartGrid}>
                     <Grid item xs={4}>
-                    <LineChartContainer change={1.0} headerText="Facebook followers" headerNumber="13,831,376" id={1}/></Grid>
-                    <Grid item xs={4}><LineChartContainer change={0} headerText="Shopify clients" headerNumber="3,009" id={1}/></Grid>
-                    <Grid item xs={4}><LineChartContainer change={4.0} headerText="TrustPilot reviews" headerNumber="1,803" id={3}/></Grid>
-                    <Grid item xs={4}><LineChartContainer change={1511} headerText="Reddit mentions" headerNumber="1,660" id={4}/></Grid>
-                    <Grid item xs={4}><LineChartContainer change={136} headerText="Ad counts" headerNumber="3,009" id={5}/></Grid>
-                    <Grid item xs={4}><LineChartContainer change={1815} headerText="Website traffic rank" headerNumber="1,803" id={6}/></Grid>
+                    <LineChartContainer change={1.0} headerText="Facebook followers" headerNumber="13,831,376" id={1} data={grafhData}/></Grid>
+                    <Grid item xs={4}><LineChartContainer change={0} headerText="Shopify clients" headerNumber="3,009" id={1} data={grafhData}/></Grid>
+                    <Grid item xs={4}><LineChartContainer change={4.0} headerText="TrustPilot reviews" headerNumber="1,803" id={3} data={grafhData}/></Grid>
+                    <Grid item xs={4}><LineChartContainer change={1511} headerText="Reddit mentions" headerNumber="1,660" id={4} data={grafhData}/></Grid>
+                    <Grid item xs={4}><LineChartContainer change={136} headerText="Ad counts" headerNumber="3,009" id={5} data={grafhData}/></Grid>
+                    <Grid item xs={4}><LineChartContainer change={1815} headerText="Website traffic rank" headerNumber="1,803" id={6} data={grafhData}/></Grid>
                 </Grid>
             </Grid>
         </Grid>

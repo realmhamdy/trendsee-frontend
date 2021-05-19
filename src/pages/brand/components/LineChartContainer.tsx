@@ -1,5 +1,5 @@
 import React from "react"
-
+import { DateTime } from "luxon"
 import Chip from "@material-ui/core/Chip"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
@@ -66,11 +66,21 @@ export interface LineChartContainerProps {
     headerText: string
     headerNumber: string
     id: number
+    data:any[]
 }
 
-export default function LineChartContainer({ change, headerText, headerNumber, id }: LineChartContainerProps) {
+export default function LineChartContainer({ change, headerText, headerNumber, id ,data }: LineChartContainerProps) {
     
+    const demoData =[
+        {
+            data: [
+                { x: DateTime.now().minus({days: 10 - 1}).toFormat("yyyy-MM-dd"),y: 27884},
+                { x: DateTime.now().minus({days: 10 - 1}).toFormat("yyyy-MM-dd"),y: 27884}
+                ],
+            id: 1,}
+    ]
     
+   
     
     const classes = useLineChartStyles({ value: change})
     let changeText: string
@@ -91,7 +101,7 @@ export default function LineChartContainer({ change, headerText, headerNumber, i
                 <Typography variant="h6" className={classes.lineChartHeaderNumber}>{headerNumber}</Typography>
                 {/* tslint-ignore no-unsafe-assignment, no-unsafe-call */}
                 <ResponsiveLine
-                    data={generateRandomLineChartData(id)}
+                    data={data}
                     margin={{top: 16, bottom: 24}}
                     xScale={{ type: "time", format: "%Y-%m-%d", precision: "day" }}
                     xFormat="time:%Y-%m-%d"

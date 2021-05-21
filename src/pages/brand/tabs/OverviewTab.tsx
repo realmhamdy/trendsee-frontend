@@ -241,7 +241,6 @@ export default function OverviewTab({ brand }: Props) {
             const reditresponse = await fetch(getAbsoluteURL(`redit/${BrandData}`),postData)
             const reditGraphdata: Reditresponce = await reditresponse.json() as Reditresponce
             
-            
            })()
         }
         },[BrandItemDetails])
@@ -250,22 +249,23 @@ export default function OverviewTab({ brand }: Props) {
         <Grid container spacing={2}>
             {/* the info/ad column */}
             <Grid item xs={3}>
+            {Object.keys(BrandItemDetails).length !== 0 && 
                 <Paper className={classes.socialPaper}>
-                    {(BrandItemDetails["Description"][0] === "NULL" || BrandItemDetails["Description"][0] === null || BrandItemDetails["Description"][0] === "null") ?  "" :
-                     <IconWithLink icon={<InfoIcon/>} text= {BrandItemDetails["Description"][0].replace(/[^a-zA-Z ]/g, "") }/>}
+                    {(BrandItemDetails.Description.toString() === "NULL" || BrandItemDetails.Description === null || BrandItemDetails.Description.toString() === "null") ?  "" :
+                     <IconWithLink icon={<InfoIcon/>} text= {BrandItemDetails.Description.toString().replace(/[^a-zA-Z ]/g, "") }/>}
                    
-                   {(BrandItemDetails["FBurl"][0] === "NULL" ||BrandItemDetails["FBurl"][0] === null ||BrandItemDetails["FBurl"][0] === "null")  ?  "" :
-                    <IconWithLink icon={<FacebookIcon/>} text={"Facebook"} url={BrandItemDetails["FBurl"][0]}/>}
+                   {(BrandItemDetails.FBurl.toString() === "NULL" ||BrandItemDetails.FBurl === null ||BrandItemDetails.FBurl.toString() === "null")  ?  "" :
+                    <IconWithLink icon={<FacebookIcon/>} text={"Facebook"} url={BrandItemDetails.FBurl.toString()}/>}
 
-                    {(BrandItemDetails["ShopifySite"][0] === "NULL" || BrandItemDetails["ShopifySite"][0] === null|| BrandItemDetails["ShopifySite"][0] === "null") ?  "" :
-                    <IconWithLink icon={<ShoppingCartIcon/>} text={"Shopify"} url={BrandItemDetails["ShopifySite"][0]}/> }
+                    {(BrandItemDetails.ShopifySite.toString() === "NULL" || BrandItemDetails.ShopifySite === null|| BrandItemDetails.ShopifySite.toString() === "null") ?  "" :
+                    <IconWithLink icon={<ShoppingCartIcon/>} text={"Shopify"} url={BrandItemDetails.ShopifySite.toString()}/> }
 
-                     {(BrandItemDetails["InstagramURL"][0] === "NULL" ||BrandItemDetails["InstagramURL"][0] === "null" ||BrandItemDetails["InstagramURL"][0] === null) ?  "" :
-                    <IconWithLink icon={<Instagram/>} text={"Instagram"} url={BrandItemDetails["InstagramURL"][0]}/>}
+                     {(BrandItemDetails.InstagramURL.toString() === "NULL" ||BrandItemDetails.InstagramURL.toString() === "null" ||BrandItemDetails.InstagramURL === null) ?  "" :
+                    <IconWithLink icon={<Instagram/>} text={"Instagram"} url={BrandItemDetails.InstagramURL.toString()}/>}
 
-                    {(BrandItemDetails["TrustpilotSite"][0] === "NULL"|| BrandItemDetails["TrustpilotSite"][0] === "null" || BrandItemDetails["TrustpilotSite"][0] === null) ?  "" :
-                    <IconWithLink icon={<RedditIcon/>} text={"Reddit"} url={ BrandItemDetails["TrustpilotSite"][0]}/>}
-                </Paper>
+                    {(BrandItemDetails.TrustpilotSite.toString() === "NULL"|| BrandItemDetails.TrustpilotSite.toString() === "null" || BrandItemDetails.TrustpilotSite === null) ?  "" :
+                    <IconWithLink icon={<RedditIcon/>} text={"Reddit"} url={ BrandItemDetails.TrustpilotSite.toString()}/>}
+                </Paper>}
                 <Paper className={classes.adPaper}>
                     <div className={classes.adPaperTextContainer}>
                         <Typography variant="caption">MOST POPULAR AD</Typography>

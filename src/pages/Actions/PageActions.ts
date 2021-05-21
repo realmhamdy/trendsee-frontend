@@ -1,56 +1,56 @@
-import {Dispatch} from "redux"
+import { Dispatch } from "redux"
 
 import { getAbsoluteURL } from "../../utils"
 
 interface Response {
-    brand: any[],
+    brand: Record<string, unknown>,
 }
-interface payloadData{
-    type:string,
-    payload:any[]
+interface payloadData {
+    type: string,
+    payload: unknown
 }
-interface loading{
-    type:string,
-    payload:boolean
+interface loading {
+    type: string,
+    payload: boolean
 }
-  
 
 
-const GetFreetextBrandDetails = ()=>{
+
+const GetFreetextBrandDetails = () => {
     const url = new URL(document.URL)
-const query = url.searchParams.get("q") as string
-    return (dispatch: Dispatch)=>{
-        const loading : loading = { type:"Loading",payload:true}
+    const query = url.searchParams.get("q") as string
+    return (dispatch: Dispatch) => {
+        const loading: loading = { type: "Loading", payload: true }
         dispatch(loading)
         void (async () => {
             const response = await fetch(getAbsoluteURL(`brandmatch/${query}`))
-            const data: Response = await response.json() as Response  
-       
-            const loading : loading = { type:"Loading",payload:false}
-             dispatch(loading)
-            const payloadData : payloadData = { type:"BrandData", payload:data.brand}
+            const data: Response = await response.json() as Response
+
+            const loading: loading = { type: "Loading", payload: false }
+            dispatch(loading)
+            const payloadData: payloadData = { type: "BrandData", payload: data.brand }
             dispatch(payloadData)
-        })()    
+        })()
     }
 }
 
 
-const GetSelectedBrandData = (value:string)=>{
+const GetSelectedBrandData = (value: string) => {
 
-    return (dispatch: Dispatch)=>{
-      
-        const loading : loading = { type:"Loading",payload:true}
+    return (dispatch: Dispatch) => {
+
+        const loading: loading = { type: "Loading", payload: true }
         dispatch(loading)
-   
-            void (async () => {
-                const response = await fetch(getAbsoluteURL(`details/${value}`))
-                const data: Response = await response.json() as Response    
-                const loading : loading = { type:"Loading",payload:false}
-                dispatch(loading)
-               const payloadData : payloadData = { type:"BrandItemDetails", payload:data.brand}
-               dispatch(payloadData)
-            })()  
-       
+
+        void (async () => {
+            const response = await fetch(getAbsoluteURL(`details/${value}`))
+            const data: Response = await response.json() as Response
+            const loading: loading = { type: "Loading", payload: false }
+            dispatch(loading)
+            const payloadData: payloadData = { type: "BrandItemDetails", payload: data.brand["0"]}
+            dispatch(payloadData)
+        })()
+
     }
 }
 

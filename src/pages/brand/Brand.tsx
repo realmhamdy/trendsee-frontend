@@ -1,17 +1,18 @@
-import React,{useEffect} from "react"
-import {useDispatch,useSelector} from "react-redux"
+import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import Grid from "@material-ui/core/Grid"
 
-import { BrandData ,BrandDetails } from "./common"
+import { BrandData, BrandDetails } from "./common"
 import BrandInformationSection from "./BrandInformationSection"
 import BrandTabs from "./BrandTabs"
 import Instagram from "@material-ui/icons/Instagram"
-import {RootStore} from "../../Redux/store"
+import { RootStore } from "../../Redux/store"
 
 import { getAbsoluteURL } from "../../utils"
 
 import Actions from "../Actions/PageActions"
 import LoadingOverlay from "../../components/LoadOverlay/LoadOverlay"
+import { RouteChildrenProps } from "react-router"
 
 const BRAND_DATA: BrandData = {
   "title": "Tommy Hilfiger",
@@ -54,31 +55,31 @@ const BRAND_DATA: BrandData = {
 
 
 export default function () {
-  const brandname:string = useSelector(((state:RootStore) => state.PageReduser["brandname"]))
-  const loading: boolean = useSelector(((state:RootStore) => state.PageReduser["loading"]))
+  const brandname: string = useSelector(((state: RootStore) => state.PageReduser["brandname"]))
+  const loading: boolean = useSelector(((state: RootStore) => state.PageReduser["loading"]))
   const dispatch = useDispatch()
-  
-  const onBackButtonEvent = () => {
-   const key = window.location.pathname.split("/brand/").pop()
-    if(key !== undefined){
-     const value =  key.replace(/-/g," ")
-     dispatch(Actions.GetSelectedBrandData(value))
-    }
- }
 
- useEffect(()=>{
-   window.history.pushState(null, window.location.pathname)
-   window.addEventListener("popstate",onBackButtonEvent)
-   return () => {
-     window.removeEventListener("popstate",onBackButtonEvent)
-   }
- },[])
- 
+  const onBackButtonEvent = () => {
+    const key = window.location.pathname.split("/brand/").pop()
+    if (key !== undefined) {
+      const value = key.replace(/-/g, " ")
+      dispatch(Actions.GetSelectedBrandData(value))
+    }
+  }
+
+  useEffect(() => {
+    window.history.pushState(null, window.location.pathname)
+    window.addEventListener("popstate", onBackButtonEvent)
+    return () => {
+      window.removeEventListener("popstate", onBackButtonEvent)
+    }
+  }, [])
+
   return (
     <Grid container spacing={1}>
-      <LoadingOverlay loading={loading}/>
-      <BrandInformationSection brand={BRAND_DATA}/>
-      <BrandTabs brand={BRAND_DATA}/>
+      <LoadingOverlay loading={loading} />
+      <BrandInformationSection brand={BRAND_DATA} />
+      <BrandTabs brand={BRAND_DATA} />
     </Grid>
   )
 }

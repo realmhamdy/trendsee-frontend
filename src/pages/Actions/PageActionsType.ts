@@ -20,20 +20,21 @@ export type defaultInitialState = {
     brandData:object,
     searchtype:string,
     brandname:string,
-    BrandItemDetails:{
-        Address: string[]
-        BrandName: string[]
-        BrandSite: string[]
-        Categories: string[]
-        CoverImage: string[]
-        Description: string[]
-        FBurl: string[]
-        InstagramURL: string[]
-        ProfileImage: string[]
-        ShopifySite: string[]
-        Timestamp: string[]
-        TrustpilotSite: string[]
-    }
+    BrandItemDetails:object
+    // {
+    //     Address: string[]
+    //     BrandName: string[]
+    //     BrandSite: string[]
+    //     Categories: string[]
+    //     CoverImage: string[]
+    //     Description: string[]
+    //     FBurl: string[]
+    //     InstagramURL: string[]
+    //     ProfileImage: string[]
+    //     ShopifySite: string[]
+    //     Timestamp: string[]
+    //     TrustpilotSite: string[]
+    // }
 }
 
 export type brandDetails = {

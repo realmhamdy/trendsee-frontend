@@ -25,20 +25,19 @@ const pageInitialstate : defaultInitialState = {
     brandData:{},
     searchtype:"",
     brandname:"",
-    BrandItemDetails:{
-        Address: [""],
-        BrandName: [""],
-        BrandSite: [""],
-        Categories: [""],
-        CoverImage: [""],
-        Description: [""],
-        FBurl: [""],
-        InstagramURL: [""],
-        ProfileImage: [""],
-        ShopifySite: [""],
-        Timestamp: [""],
-        TrustpilotSite: [""]
-  }
+    BrandItemDetails:{}
+        // Address: [""],
+        // BrandName: [""],
+        // BrandSite: [""],
+        // Categories: [""],
+        // CoverImage: [""],
+        // Description: [""],
+        // FBurl: [""],
+        // InstagramURL: [""],
+        // ProfileImage: [""],
+        // ShopifySite: [""],
+        // Timestamp: [""],
+        // TrustpilotSite: [""]
 }
 
 export const  PageReduser = (state:defaultInitialState = pageInitialstate, actions: actions)=>{

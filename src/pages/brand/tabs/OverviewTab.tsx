@@ -293,9 +293,9 @@ export default function OverviewTab({ brand }: Props) {
             <Grid container item xs={9}>
                 {/* The gauge charts row */}
                 <Grid container item xs={12} spacing={3}>
-                    <GaugeChartContainer topLabel="Growth Score" value={97.56} previousValue={96.46}/>
-                    <GaugeChartContainer topLabel="Success Score" value={74.2} previousValue={74.6}/>
-                    <GaugeChartContainer topLabel="Sophistication Score" value={60} previousValue={42}/>
+                    <GaugeChartContainer topLabel="Scaling Score" value={97.56} previousValue={96.46}/>
+                    <GaugeChartContainer topLabel="Revenue Score" value={74.2} previousValue={74.6}/>
+                    {/* <GaugeChartContainer topLabel="Sophistication Score" value={60} previousValue={42}/> */}
                 </Grid>
                 {/* the edit chart controls row */}
                 <ReportsOverviewHeader/>

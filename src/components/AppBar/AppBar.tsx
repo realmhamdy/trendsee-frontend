@@ -1,5 +1,5 @@
-import React from "react"
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
+import { useHistory, Link as RouterLink } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { createStyles, makeStyles, Theme, fade } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
@@ -17,8 +17,7 @@ import SearchIcon from "@material-ui/icons/Search"
 import HelpOutlineIcon from "@material-ui/icons/HelpOutlineRounded"
 
 import Actions from "../../pages/Actions/PageActions"
-
-import { useHistory, Link as RouterLink } from "react-router-dom"
+import logo from "../../assets/images/logo.png"
 
 import "../../static/fonts/cunia/stylesheet.css"
 
@@ -87,8 +86,9 @@ export default function () {
   function handleSearchAutocompleteSubmitted(event: React.ChangeEvent<unknown>, ...rest: any[]) {
     const value = rest[0] as string
     if (value) {
+      const formattedValue = value.replace("/", ":")
       //history.push("/search?" + new URLSearchParams({q: value}).toString())
-      history.push(`/brand/${value.replace(/ /g, "-")}`)
+      history.push(`/brand/${formattedValue.replace(/ /g, "-")}`)
       dispatch(Actions.GetSelectedBrandData(value))
     }
   }
@@ -110,7 +110,8 @@ export default function () {
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             <Link component={RouterLink} to="/" className={classes.title} underline="none">
-              <span><span>T</span>rend</span><span><span>S</span>ee</span>
+              <img src={logo} alt="Trendsee" />
+              {/* <span><span>T</span>rend</span><span><span>S</span>ee</span> */}
             </Link>
           </Typography>
           <div className={classes.searchForm}>

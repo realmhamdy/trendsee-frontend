@@ -17,3 +17,31 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+#navBar
+{
+  position:relative;
+}
+#navBar:after
+{
+  position:absolute;
+  left:0px;
+  width:100%;
+  bottom:-46px;
+  content:"";
+  height:46px;
+  background:#F7FAFC;
+  border-bottom:1px solid #E3E8EE;
+}
+.searchBrandTab button
+{
+  padding-top:0px;
+  padding-left:0px;
+  padding-right:0px;
+  min-width:auto;
+  margin-right:28px;
+  text-transform:none;
+}
+
+
+
+

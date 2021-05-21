@@ -15,8 +15,8 @@ function App() {
   return (
     <Provider store={Store}>
       <Router>
+        <AppBar />
         <WrapperBox>
-          <AppBar />
           <Switch>
             <Route exact path="/search-brand">
               <SearchBrandPage />

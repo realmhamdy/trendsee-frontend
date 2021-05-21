@@ -47,6 +47,14 @@ export interface BrandDetails {
     TrustpilotSite: string[]
 }
 
+export interface Products {
+    ImageURL:string
+    Name:string
+    PreviousPrice:any
+    Price:number
+    URL:string
+}
+
 
 export function generateRandomLineChartData(id: number) {
     return [{

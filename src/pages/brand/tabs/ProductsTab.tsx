@@ -1,5 +1,5 @@
-import React from "react"
-import {useState, useEffect} from "react"
+import React, { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import Avatar from "@material-ui/core/Avatar"
 import Grid from "@material-ui/core/Grid"
 import FormControl from "@material-ui/core/FormControl"
@@ -12,6 +12,10 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import LaunchIcon from "@material-ui/icons/Launch"
 
 import { productsData } from "./data"
+import Actions from "../../Actions/PageActions"
+import { RootStore } from "../../../Redux/store"
+import { Products } from "../common"
+import LoadingOverlay from "../../../components/LoadOverlay/LoadOverlay"
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -61,6 +65,9 @@ export default function ProductsTab() {
     const classes = useStyles()
     const [productsDropdownValue, setProductsDropdownValue] = useState<string | null>("all")
     const [hoveredProductIndex, setHoveredProductIndex] = useState<number | null>(null)
+    const loading: boolean = useSelector(((state: RootStore) => state.PageReduser["loading"]))
+    const Products: Array<Products> = useSelector(((state: RootStore) => state.PageReduser["products"]))
+
     function handleMouseEnteredProduct(index: number) {
         setHoveredProductIndex(index)
     }
@@ -73,7 +80,7 @@ export default function ProductsTab() {
     return (
         <Grid container className={classes.mainContainer}>
             <Grid container item xs={12} alignItems="center" justify="space-between">
-                <Typography variant="h5" className={classes.header}>Product Reviews <Typography variant="h6" component="span">~3430 products</Typography></Typography>
+                <Typography variant="h5" className={classes.header}>Product Reviews <Typography variant="h6" component="span">{`~${Products.length}`}</Typography></Typography>
                 <FormControl variant="outlined" size="small">
                     <Select
                         value={productsDropdownValue}
@@ -84,7 +91,8 @@ export default function ProductsTab() {
                 </FormControl>
             </Grid>
             <Grid container item xs={12} spacing={2} className={classes.productsContainer}>
-                {productsData.map((product, index) => (
+            <LoadingOverlay loading={loading} />
+                {Products.map((product, index) => (
                     <Grid item xs={3} key={index}>
                         <Paper
                             variant={hoveredProductIndex == index ? "elevation" : "outlined"}
@@ -94,13 +102,13 @@ export default function ProductsTab() {
                             className={classes.productPaper}>
                             <Typography variant="subtitle1">
                                 <div className={classes.productHeaderContainer}>
-                                    <span>{product.brandName}</span>
-                                     <Link href={product.url} target="_blank"><LaunchIcon color="action" fontSize="small"/></Link>
+                                    <span>{product.Name}</span>
+                                    <Link href={product.URL} target="_blank"><LaunchIcon color="action" fontSize="small" /></Link>
                                 </div>
                             </Typography>
-                            <Avatar variant="square" src={product.image}/>
-                            <Typography variant="subtitle2">{product.name}</Typography>
-                            <Typography variant="subtitle1" className={classes.priceLine}>${product.price}{product.previousPrice ? <span>${product.previousPrice}</span> : null}</Typography>
+                            <Avatar variant="square" src={product.ImageURL} />
+                            <Typography variant="subtitle2">{product.Name}</Typography>
+                            <Typography variant="subtitle1" className={classes.priceLine}>${product.Price}{product.PreviousPrice !== "NULL" ? <span>${product.PreviousPrice}</span> : null}</Typography>
                         </Paper>
                     </Grid>
                 ))}

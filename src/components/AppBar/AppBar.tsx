@@ -89,6 +89,7 @@ export default function () {
       //history.push("/search?" + new URLSearchParams({q: value}).toString())
       history.push(`/brand/${formattedValue.replace(/ /g, "-")}`)
       dispatch(Actions.GetSelectedBrandData(value))
+      dispatch(Actions.GetProductsData(value))
     }
   }
   interface Response {

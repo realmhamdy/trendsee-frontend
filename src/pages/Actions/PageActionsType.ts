@@ -20,7 +20,8 @@ export type defaultInitialState = {
     brandData:object,
     searchtype:string,
     brandname:string,
-    BrandItemDetails:object
+    BrandItemDetails:object,
+    products:Array<unknown>
     // {
     //     Address: string[]
     //     BrandName: string[]

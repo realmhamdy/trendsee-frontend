@@ -27,6 +27,11 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      paddingLeft: "96px",
+    paddingRight: "96px",
+    height:"72px",
+    paddingTop:"20px",
+    background:"#F7FAFC",
     },
     appBar: {
       boxShadow: "none",
@@ -35,15 +40,9 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     title: {
-      flexGrow: 1,
-      fontFamily: "CuniaBold",
-      fontSize: 28,
-      lineHeight: "40px",
-      "&> span:first-child": {
-        color: "#1A1F36",
-        "& span": {
-          fontSize: 32
-        }
+      width:"calc(100% - 428px)",
+      "&> img": {
+        width:"134px",
       },
       "&> span:last-child": {
         color: "#3C4FE0",
@@ -105,8 +104,8 @@ export default function () {
     })()
   }, [searchTerm])
   return (
-    <div className={classes.root}>
-      <AppBar position="static" color="transparent" className={classes.appBar}>
+    <div id="navBar"  className={classes.root} >
+      <AppBar position="static" color="transparent" className={classes.appBar} >
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             <Link component={RouterLink} to="/" className={classes.title} underline="none">

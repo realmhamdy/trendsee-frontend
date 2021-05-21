@@ -529,8 +529,8 @@ export default function SearchBrand() {
 
   return (
     <Grid container>
-      <Grid item xs={12}>
-        <Tabs value={tabIndex} onChange={handleTabChanged} textColor="primary" indicatorColor="primary">
+      <Grid item xs={12} className="searchBrandTab">
+        <Tabs value={tabIndex} onChange={handleTabChanged} textColor="primary" indicatorColor="primary" >
           {tabNames.map((tabName, index) => (
             <Tab label={tabName} key={index} />
           ))}

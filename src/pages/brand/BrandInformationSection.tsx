@@ -78,10 +78,9 @@ export default function BrandInformationSection({ brand }: Props) {
 
   // }
 
-
-
-  function renderTags(data: string[]) {
-    return data.map((tag, index) => (
+  function renderTags(data: string) {
+    const tags: string[] = data.split(/,/g)
+    return tags.map((tag, index) => (
       <Chip label={tag} key={index} />
     ))
   }
@@ -101,44 +100,44 @@ export default function BrandInformationSection({ brand }: Props) {
   return (
     <>
       {/* Cover row */}
-      {Object.keys(BrandItemDetails).length !== 0 && 
-      <>
-      <Grid item xs={12}>
-        {!BrandItemDetails.CoverImage || BrandItemDetails.CoverImage.toLocaleString() === "NULL" ? "" : <img src={BrandItemDetails.CoverImage.toString()} alt="brand cover" className={classes.coverImg} />}
-
-      </Grid>
-      {/* Information row */}
-      <Grid container item xs={12}>
-        {/* Avatar */}
-        <Grid item xs={2}>
-          <Avatar src={BrandItemDetails.ProfileImage.toString()} variant="circular" className={classes.avatarImg} />
-        </Grid>
-        {/* Text information */}
-        <Grid container item xs={7} className={classes.brandTextDataContainer} alignItems="flex-start">
+      {Object.keys(BrandItemDetails).length !== 0 &&
+        <>
           <Grid item xs={12}>
-            <Typography variant="h3" className={classes.brandTitle}>{BrandItemDetails.BrandName}</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant="subtitle1" className={classes.brandSubtitle}>
-              {BrandItemDetails.Address.toString() === "NULL" ? "" : BrandItemDetails.Address}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} className={classes.brandTagsContainer}>
-            {/* {renderTags()}   */}
+            {!BrandItemDetails.CoverImage || BrandItemDetails.CoverImage.toLocaleString() === "NULL" ? "" : <img src={BrandItemDetails.CoverImage.toString()} alt="brand cover" className={classes.coverImg} />}
 
-            {(!BrandItemDetails.Categories || BrandItemDetails.Categories.toString() === "NULL") ? "" : renderTags(BrandItemDetails.Categories)}
           </Grid>
-        </Grid>
-        {/* Brand link */}
-        <Grid container item xs={3} alignItems="center" justify="flex-end">
-          <Grid item xs={4}>
-            {(BrandItemDetails.BrandSite.toString() === "NULL" || BrandItemDetails.BrandSite.toString() === "null" || BrandItemDetails.BrandSite === null || BrandItemDetails.BrandSite.toString() === "") ?
-              ""
-              : <Button variant="contained" color="primary" onClick={() => openBrandPage()}>Visit Site</Button>}
+          {/* Information row */}
+          <Grid container item xs={12}>
+            {/* Avatar */}
+            <Grid item xs={2}>
+              <Avatar src={BrandItemDetails.ProfileImage.toString()} variant="circular" className={classes.avatarImg} />
+            </Grid>
+            {/* Text information */}
+            <Grid container item xs={7} className={classes.brandTextDataContainer} alignItems="flex-start">
+              <Grid item xs={12}>
+                <Typography variant="h3" className={classes.brandTitle}>{BrandItemDetails.BrandName}</Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="subtitle1" className={classes.brandSubtitle}>
+                  {BrandItemDetails.Address.toString() === "NULL" ? "" : BrandItemDetails.Address}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} className={classes.brandTagsContainer}>
+                {/* {renderTags()}   */}
+
+                {(!BrandItemDetails.Categories || BrandItemDetails.Categories.toString() === "NULL") ? "" : renderTags(BrandItemDetails.Categories.toString())}
+              </Grid>
+            </Grid>
+            {/* Brand link */}
+            <Grid container item xs={3} alignItems="center" justify="flex-end">
+              <Grid item xs={4}>
+                {(BrandItemDetails.BrandSite.toString() === "NULL" || BrandItemDetails.BrandSite.toString() === "null" || BrandItemDetails.BrandSite === null || BrandItemDetails.BrandSite.toString() === "") ?
+                  ""
+                  : <Button variant="contained" color="primary" onClick={() => openBrandPage()}>Visit Site</Button>}
+              </Grid>
+            </Grid>
           </Grid>
-        </Grid>
-      </Grid>
-      </>
+        </>
       }
     </>
   )

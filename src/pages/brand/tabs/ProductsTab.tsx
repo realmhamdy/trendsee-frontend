@@ -91,7 +91,7 @@ export default function ProductsTab() {
                 </FormControl>
             </Grid>
             <Grid container item xs={12} spacing={2} className={classes.productsContainer}>
-            <LoadingOverlay loading={loading} />
+                <LoadingOverlay loading={loading} />
                 {Products.map((product, index) => (
                     <Grid item xs={3} key={index}>
                         <Paper
@@ -112,6 +112,7 @@ export default function ProductsTab() {
                         </Paper>
                     </Grid>
                 ))}
+                {Products.length === 0 && <Typography variant="h6">No Products to feature...</Typography>}
             </Grid>
         </Grid>
     )

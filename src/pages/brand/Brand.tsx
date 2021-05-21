@@ -12,7 +12,6 @@ import { getAbsoluteURL } from "../../utils"
 
 import Actions from "../Actions/PageActions"
 import LoadingOverlay from "../../components/LoadOverlay/LoadOverlay"
-import { RouteChildrenProps } from "react-router"
 
 const BRAND_DATA: BrandData = {
   "title": "Tommy Hilfiger",
@@ -68,6 +67,7 @@ export default function () {
   }
 
   useEffect(() => {
+    window.scrollTo(0,0)
     window.history.pushState(null, window.location.pathname)
     window.addEventListener("popstate", onBackButtonEvent)
     return () => {
